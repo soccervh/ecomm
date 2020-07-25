@@ -1,0 +1,20 @@
+mutation AddProductToCartMutation($id: ID!, $quantity: Int!) {
+    addProductToCart(productId: $id, quantity: $quantity) {
+        cart {
+            id
+            user {
+                id
+                username
+            }
+            id
+            products {
+                id
+                quantity
+                product {
+                    id
+                    name
+                }
+            }
+        }
+    }
+}

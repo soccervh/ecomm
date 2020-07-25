@@ -1,0 +1,114 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type AddProductToCartMutation {
+    cart: CartType
+}
+
+type CartType {
+    cartProducts: [ProductThroughModelType!]!
+    id: ID!
+    products: [ProductThroughModelType]
+    user: UserType!
+}
+
+type CategoryType {
+    id: ID!
+    name: String!
+    productSet: [ProductType!]!
+}
+
+type Mutation {
+    addProductToCart(productId: ID!, quantity: Int): AddProductToCartMutation
+    purchase: PurchaseMutation
+    signIn(password: String, username: String): SignInMutation
+    signOut: SignOutMutation
+    updateProduct(id: ID!, name: String, price: Float): ProductMutation
+    uploadProfilePicture(file: Upload!, id: ID): UploadMutation
+}
+
+type ProductMutation {
+    product: ProductType
+}
+
+type ProductThroughModelType {
+    cart: CartType!
+    id: ID!
+    product: ProductType!
+    quantity: Int!
+}
+
+type ProductType {
+    cartProducts: [ProductThroughModelType!]!
+    cartSet: [CartType!]!
+    category: CategoryType!
+    description: String!
+    id: ID!
+    name: String!
+    price: Float!
+    profilePic: String
+    qtyInStock: Int!
+    skuNumber: Int!
+    slug: String!
+}
+
+type PurchaseMutation {
+    cart: CartType
+}
+
+type Query {
+    allCategories: [CategoryType]
+    allProducts: [ProductType]
+    cart: CartType
+    currentUser: UserType
+    getProduct(id: Int, slug: String): ProductType
+}
+
+type SignInMutation {
+    user: UserType
+}
+
+type SignOutMutation {
+    currentUser: UserType
+}
+
+type UploadMutation {
+    product: ProductType
+}
+
+type UserType {
+    cart: CartType
+    dateJoined: DateTime!
+    email: String!
+    firstName: String!
+    id: ID!
+    "Designates whether this user should be treated as active. Unselect this instead of deleting accounts."
+    isActive: Boolean!
+    "Designates whether the user can log into this admin site."
+    isStaff: Boolean!
+    "Designates that this user has all permissions without explicitly assigning them."
+    isSuperuser: Boolean!
+    lastLogin: DateTime
+    lastName: String!
+    password: String!
+    "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+    username: String!
+}
+
+
+"""
+The `DateTime` scalar type represents a DateTime
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar DateTime
+
+"""
+Create scalar that ignores normal serialization/deserialization, since
+that will be handled by the multipart request spec
+"""
+scalar Upload

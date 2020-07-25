@@ -1,0 +1,10 @@
+query UserQuery {
+    currentUser {
+        id
+        username
+        lastName
+        firstName
+        email
+        dateJoined
+    }
+}

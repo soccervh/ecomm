@@ -1,0 +1,20 @@
+mutation purchase {
+    purchase {
+        cart {
+            id
+            user {
+                username
+                id
+            }
+            products {
+                quantity
+                id
+                product {
+                    id
+                    price
+                }
+            }
+        }
+
+    }
+}

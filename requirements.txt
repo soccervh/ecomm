@@ -1,0 +1,5 @@
+django
+graphene
+graphene-django
+graphene-file-upload
+pillow

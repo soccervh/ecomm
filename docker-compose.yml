@@ -1,0 +1,9 @@
+version: '3.7'
+services:
+  ecomm:
+    image: ecommerce
+    volumes:
+      - .:/home/docker/code/app
+    ports:
+      - '8000:8000'
+    command: ['run.sh']

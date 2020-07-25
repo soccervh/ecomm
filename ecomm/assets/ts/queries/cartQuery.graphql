@@ -1,0 +1,16 @@
+{
+    cart {
+        id
+        user {
+            id
+        }
+        products {
+            id
+            quantity
+            product {
+                id
+                name
+            }
+        }
+    }
+}

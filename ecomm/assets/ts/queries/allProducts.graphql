@@ -1,0 +1,12 @@
+query AllProducts {
+    allProducts {
+        name
+        price
+        id
+        description
+        qtyInStock
+        skuNumber
+        slug
+        profilePic
+    }
+}

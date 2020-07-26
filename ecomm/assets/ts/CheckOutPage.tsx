@@ -4,7 +4,7 @@ import { useMutation } from "@apollo/react-hooks";
 import Purchase from "./queries/purchase.graphql";
 
 export function CheckOutPage() {
-  const [Mutate] = useMutation(Purchase);
+  const [mutate] = useMutation(Purchase);
   return (
     <Formik
       initialValues={{
@@ -81,6 +81,22 @@ export function CheckOutPage() {
             </span>
           </span>
         </div>
+        <button
+            type={"button"}
+            onClick={(e) => {
+              // Call your mutation
+              // you have the product.id
+              //you have the field value under values
+              // values['products[1].quantity
+
+              mutate({
+                variables: {
+                  name:
+                },
+              });
+
+            }}
+        >Save and Go to payment</button>
       </Fragment>
     </Formik>
   );

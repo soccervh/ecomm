@@ -9,6 +9,17 @@ type AddProductToCartMutation {
     cart: CartType
 }
 
+type BillingType {
+    address: String!
+    city: String!
+    id: ID!
+    name: String!
+    purchaseSet: [PurchaseType!]!
+    state: String!
+    user: UserType!
+    zip: String!
+}
+
 type CartType {
     cartProducts: [ProductThroughModelType!]!
     id: ID!
@@ -28,6 +39,7 @@ type Mutation {
     signIn(password: String, username: String): SignInMutation
     signOut: SignOutMutation
     updateProduct(id: ID!, name: String, price: Float): ProductMutation
+    updateShippingBilling(billing: BillingInputType, shipping: ShippingInputType): UpdateShippingBillingMutation
     uploadProfilePicture(file: Upload!, id: ID): UploadMutation
 }
 
@@ -51,6 +63,7 @@ type ProductType {
     name: String!
     price: Float!
     profilePic: String
+    purchaseSet: [PurchaseType!]!
     qtyInStock: Int!
     skuNumber: Int!
     slug: String!
@@ -58,6 +71,14 @@ type ProductType {
 
 type PurchaseMutation {
     cart: CartType
+}
+
+type PurchaseType {
+    billing: BillingType
+    id: ID!
+    products: [ProductType!]!
+    shipping: ShippingType
+    user: UserType!
 }
 
 type Query {
@@ -68,6 +89,17 @@ type Query {
     getProduct(id: Int, slug: String): ProductType
 }
 
+type ShippingType {
+    address: String!
+    city: String!
+    id: ID!
+    name: String!
+    purchaseSet: [PurchaseType!]!
+    state: String!
+    user: UserType!
+    zip: String!
+}
+
 type SignInMutation {
     user: UserType
 }
@@ -76,11 +108,16 @@ type SignOutMutation {
     currentUser: UserType
 }
 
+type UpdateShippingBillingMutation {
+    updated: Boolean
+}
+
 type UploadMutation {
     product: ProductType
 }
 
 type UserType {
+    billingSet: [BillingType!]!
     cart: CartType
     dateJoined: DateTime!
     email: String!
@@ -95,8 +132,26 @@ type UserType {
     lastLogin: DateTime
     lastName: String!
     password: String!
+    purchaseSet: [PurchaseType!]!
+    shippingSet: [ShippingType!]!
     "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
     username: String!
+}
+
+input BillingInputType {
+    address: String!
+    city: String!
+    name: String!
+    state: String!
+    zip: String!
+}
+
+input ShippingInputType {
+    address: String!
+    city: String!
+    name: String!
+    state: String!
+    zip: String!
 }
 
 

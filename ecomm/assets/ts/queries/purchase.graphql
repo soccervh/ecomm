@@ -1,5 +1,33 @@
 mutation purchase {
     purchase {
+billing{
+    address
+    city
+    id
+    user {
+        id
+        username
+        firstName
+        lastName
+    }
+    state
+    zip
+    name
+}
+        shipping{
+            address
+            city
+            id
+            user {
+                id
+                username
+                firstName
+                lastName
+            }
+            state
+            zip
+            name
+        }
         cart {
             id
             user {

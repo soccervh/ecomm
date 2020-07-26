@@ -56,6 +56,7 @@ class Billing(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
+    name = models.CharField(max_length=64)
     address = models.CharField(max_length=64)
     city = models.CharField(max_length=64)
     state = models.CharField(max_length=2)

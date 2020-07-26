@@ -6,7 +6,8 @@ from graphene_file_upload.scalars import Upload
 
 from graphene_django.types import DjangoObjectType
 
-from .models import Category, Product, Cart, ProductCartThroughModel, ProductPurchaseThroughModel, Purchase
+from .models import Category, Product, Cart, ProductCartThroughModel, ProductPurchaseThroughModel, Purchase, Shipping, \
+    Billing
 
 import logging
 
@@ -46,6 +47,24 @@ class CartType(DjangoObjectType):
     def resolve_products(self, info):
         logger.info(ProductCartThroughModel.objects.filter(cart=self, ))
         return ProductCartThroughModel.objects.filter(cart=self, )
+
+
+class ShippingType(DjangoObjectType):
+    class Meta:
+        model = Shipping
+
+
+class BillingType(DjangoObjectType):
+    class Meta:
+        model = Billing
+
+
+class PurchaseType(DjangoObjectType):
+    shipping = graphene.Field(ShippingType)
+    billing = graphene.Field(BillingType)
+
+    class Meta:
+        model = Purchase
 
 
 class Query(object):
@@ -192,7 +211,6 @@ class AddProductToCartMutation(graphene.Mutation):
 
 
 class PurchaseMutation(graphene.Mutation):
-
     cart = graphene.Field(CartType)
 
     def mutate(self, info, **kwargs):
@@ -210,6 +228,44 @@ class PurchaseMutation(graphene.Mutation):
         return PurchaseMutation()
 
 
+class ShippingInputType(graphene.InputObjectType):
+    name = graphene.String(required=True)
+    address = graphene.String(required=True)
+    city = graphene.String(required=True)
+    zip = graphene.String(required=True)
+    state = graphene.String(required=True)
+
+
+class BillingInputType(graphene.InputObjectType):
+    name = graphene.String(required=True)
+    address = graphene.String(required=True)
+    city = graphene.String(required=True)
+    zip = graphene.String(required=True)
+    state = graphene.String(required=True)
+
+
+class UpdateShippingBillingMutation(graphene.Mutation):
+    class Arguments:
+        shipping = ShippingInputType()
+        billing = BillingInputType()
+
+    shipping = graphene.Boolean()
+
+    def mutate(self, info, shipping=None, billing=None, **kwargs):
+        if shipping:
+            name = Purchase.shipping.name
+            address = Purchase.shipping.address
+            city = Purchase.shipping.city
+            zip = Purchase.shipping.zip
+            state = Purchase.shipping.state
+        if billing:
+            name = Purchase.billing.name
+            address = Purchase.billing.address
+            city = Purchase.billing.city
+            zip = Purchase.billing.zip
+            state = Purchase.billing.state
+
+
 class Mutation(graphene.ObjectType):
     update_product = ProductMutation.Field()
     sign_out = SignOutMutation.Field()
@@ -217,3 +273,4 @@ class Mutation(graphene.ObjectType):
     upload_profile_picture = UploadMutation.Field()
     add_product_to_cart = AddProductToCartMutation.Field()
     purchase = PurchaseMutation.Field()
+    update_shipping_billing = UpdateShippingBillingMutation.Field()

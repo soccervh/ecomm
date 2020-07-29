@@ -3,6 +3,7 @@ const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin"
 const isDevelopment = process.env.NODE_ENV !== "production";
 module.exports = {
   context: __dirname,
+  devtool: "eval-cheap-module-source-map",
   entry: {
     index: "./ecomm/assets/ts/index",
     tailwind: "./ecomm/assets/sass/tailwind.scss",

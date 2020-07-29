@@ -75,6 +75,8 @@ class Query(object):
                                  id=graphene.Int(),
                                  slug=graphene.String())
     cart = graphene.Field(CartType)
+    billing_info = graphene.Field(BillingType, id=graphene.Int())
+    shipping_info = graphene.Field(ShippingType, id=graphene.Int())
 
     # our Resolver method takes the GraphQL context (root, info) as well as
     # Argument (name) for the Field and returns data for the query Response
@@ -103,6 +105,14 @@ class Query(object):
         #save the ProductCartThroughModel
 
         return cart
+
+    def resolve_billing_info(self, info, id=None):
+        if id:
+            return Billing.objects.get(pk=id)
+
+    def resolve_shipping_info(self, info, id=None):
+        if id:
+            return Shipping.objects.get(pk=id)
 
 
 class ProductMutation(graphene.Mutation):
@@ -211,11 +221,19 @@ class AddProductToCartMutation(graphene.Mutation):
 
 
 class PurchaseMutation(graphene.Mutation):
+    class Arguments:
+        billing_id = graphene.ID(required=True)
+        shipping_id = graphene.ID(required=True)
+
     cart = graphene.Field(CartType)
 
-    def mutate(self, info, **kwargs):
+    def mutate(self, info, billing_id, shipping_id, **kwargs):
+        billing = Billing.objects.get(pk=billing_id)
+        shipping = Shipping.objects.get(pk=shipping_id)
         cart = Cart.objects.get(user=info.context.user)
-        purchase = Purchase.objects.create(user=info.context.user)
+        purchase = Purchase.objects.create(user=info.context.user,
+                                           billing=billing,
+                                           shipping=shipping)
         for product_cart in cart.cart_products.all():
             purchase_cart = ProductPurchaseThroughModel.objects.create(
                 product=product_cart.product,
@@ -249,21 +267,27 @@ class UpdateShippingBillingMutation(graphene.Mutation):
         shipping = ShippingInputType()
         billing = BillingInputType()
 
-    shipping = graphene.Boolean()
+    shipping = graphene.Field(ShippingType)
+    billing = graphene.Field(BillingType)
 
     def mutate(self, info, shipping=None, billing=None, **kwargs):
+        ships = bills = None
         if shipping:
-            name = Purchase.shipping.name
-            address = Purchase.shipping.address
-            city = Purchase.shipping.city
-            zip = Purchase.shipping.zip
-            state = Purchase.shipping.state
+            ships = Shipping.objects.create(name=shipping.name,
+                                            address=shipping.address,
+                                            city=shipping.city,
+                                            zip=shipping.zip,
+                                            state=shipping.state,
+                                            user=info.context.user)
+
         if billing:
-            name = Purchase.billing.name
-            address = Purchase.billing.address
-            city = Purchase.billing.city
-            zip = Purchase.billing.zip
-            state = Purchase.billing.state
+            bills = Billing.objects.create(name=billing.name,
+                                           address=billing.address,
+                                           city=billing.city,
+                                           zip=billing.zip,
+                                           state=billing.state,
+                                           user=info.context.user)
+        return UpdateShippingBillingMutation(shipping=ships, billing=bills)
 
 
 class Mutation(graphene.ObjectType):

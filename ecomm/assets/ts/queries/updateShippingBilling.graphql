@@ -1,0 +1,31 @@
+mutation updateShippingBilling($billing:BillingInputType, $shipping:ShippingInputType) {
+updateShippingBilling(billing: $billing,shipping:$shipping) {
+    billing {
+        id
+        address
+        city
+        name
+        state
+        zip
+        user {
+            id
+            firstName
+            lastName
+        }
+    }
+
+    shipping {
+        id
+        address
+        city
+        name
+        state
+        zip
+        user {
+            id
+            firstName
+            lastName
+        }
+    }
+}
+}

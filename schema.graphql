@@ -35,7 +35,7 @@ type CategoryType {
 
 type Mutation {
     addProductToCart(productId: ID!, quantity: Int): AddProductToCartMutation
-    purchase: PurchaseMutation
+    purchase(billingId: ID!, shippingId: ID!): PurchaseMutation
     signIn(password: String, username: String): SignInMutation
     signOut: SignOutMutation
     updateProduct(id: ID!, name: String, price: Float): ProductMutation
@@ -84,9 +84,11 @@ type PurchaseType {
 type Query {
     allCategories: [CategoryType]
     allProducts: [ProductType]
+    billingInfo(id: Int): BillingType
     cart: CartType
     currentUser: UserType
     getProduct(id: Int, slug: String): ProductType
+    shippingInfo(id: Int): ShippingType
 }
 
 type ShippingType {
@@ -109,7 +111,8 @@ type SignOutMutation {
 }
 
 type UpdateShippingBillingMutation {
-    updated: Boolean
+    billing: BillingType
+    shipping: ShippingType
 }
 
 type UploadMutation {

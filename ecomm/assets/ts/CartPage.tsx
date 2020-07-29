@@ -29,59 +29,56 @@ export function CartPage() {
     >
       {({ values }) => (
         <table>
-          {data?.cart?.products?.map(({ quantity, product }, n) => {
-            return (
-              <tr key={product.id}>
-                <td>{product.name}</td>
-                <td>
-                  <Field type="text" name={`products[${n}].quantity`} />
-                </td>
-                <td>
-                  <button
-                    type={"button"}
-                    onClick={(e) => {
-                      // Call your mutation
-                      // you have the product.id
-                      //you have the field value under values
-                      // values['products[1].quantity
+          <tbody>
+            {data?.cart?.products?.map(({ quantity, product }, n) => {
+              return (
+                <tr key={product.id}>
+                  <td>{product.name}</td>
+                  <td>
+                    <Field type="text" name={`products[${n}].quantity`} />
+                  </td>
+                  <td>
+                    <button
+                      type={"button"}
+                      onClick={(e) => {
+                        // Call your mutation
+                        // you have the product.id
+                        //you have the field value under values
+                        // values['products[1].quantity
 
-                      mutate({
-                        variables: {
-                          id: product.id,
-                          quantity: get(values, `products.${n}.quantity`),
-                        },
-                      });
-                      return (
-                        <Field type="text" name={`products[${n}].quantity`} />
-                      );
-                    }}
-                  >
-                    Update
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      mutate({
-                        variables: {
-                          id: product.id,
-                          quantity: 0,
-                        },
-                      });
-                      return;
-                    }}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-          <tr>
-            <td>
-              <Link to={"/checkout"}>
-                <CheckOutPage />
-              </Link>
-            </td>
-          </tr>
+                        mutate({
+                          variables: {
+                            id: product.id,
+                            quantity: get(values, `products.${n}.quantity`),
+                          },
+                        });
+                      }}
+                    >
+                      Update
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        mutate({
+                          variables: {
+                            id: product.id,
+                            quantity: 0,
+                          },
+                        });
+                        return;
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+            <tr>
+              <td>
+                <Link to={"/checkout"}>Check out!</Link>
+              </td>
+            </tr>
+          </tbody>
         </table>
       )}
     </Formik>

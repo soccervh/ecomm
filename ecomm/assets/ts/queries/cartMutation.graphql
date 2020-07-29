@@ -12,7 +12,9 @@ mutation AddProductToCartMutation($id: ID!, $quantity: Int!) {
                 quantity
                 product {
                     id
+                    price
                     name
+                    qtyInStock
                 }
             }
         }

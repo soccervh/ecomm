@@ -25,14 +25,20 @@ export function ProductDisplay() {
     variables: { slug: slug },
   });
   return (
-    <div>
-      Product Display for {slug}
-      <p>{data?.getProduct?.name}</p>
-      <p>
-        <AddMultipleToCart productId={data?.getProduct?.id} />
-      </p>
-      <img src={data?.getProduct?.profilePic} />
-      <FileUpload productId={data?.getProduct?.id} />
+    <div className="flex bg-blue-400 content-center items-center justify-center">
+      <div className="w-64">
+        <img
+          alt={`${data?.getProduct?.name}`}
+          src={data?.getProduct?.profilePic}
+        />
+        <FileUpload productId={data?.getProduct?.id} />
+      </div>
+      <div className=" ml-8 flex flex-col  ">
+        Picture of {slug} <div className="  ">{data?.getProduct?.name}</div>
+        <div className="  ">
+          <AddMultipleToCart productId={data?.getProduct?.id} />
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,13 @@
+query ShippingInfo($id: Int) {
+    shippingInfo(id: $id) {
+        user {
+            id
+        }
+        address
+        city
+        name
+        state
+        zip
+        id
+    }
+}

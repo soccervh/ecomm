@@ -1,0 +1,13 @@
+query BillingInfo($id: Int) {
+  billingInfo(id: $id) {
+    user {
+      id
+    }
+    address
+    city
+    name
+    state
+    zip
+    id
+  }
+}

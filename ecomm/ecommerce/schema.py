@@ -191,14 +191,18 @@ class AddProductToCartMutation(graphene.Mutation):
 
     #this is what is returned
     cart = graphene.Field(CartType)
+    success = graphene.Boolean()
+    message = graphene.String()
 
     def mutate(self, info, product_id, **kwargs):
         quantity = kwargs.get('quantity', 1)
         product = Product.objects.get(pk=product_id)
-
+        success = False
+        message = ""
         cart, created = Cart.objects.get_or_create(user=info.context.user)
         # tip: info.context.user  is the USER as a User Model
         # get the Cart for the user
+
         if quantity == 0:
             ProductCartThroughModel.objects.get(
                 product=product,
@@ -209,15 +213,22 @@ class AddProductToCartMutation(graphene.Mutation):
             # this will also let you specify the quantity
             # through_model = ProductCartThroughModel.objects.create(product=product, cart=cart, quantity=quantity)
             # cart.products.add(through_model)
+            if product.qty_in_stock >= quantity:
+                success = True
+                pic, pic_created = ProductCartThroughModel.objects.get_or_create(
+                    product=product,
+                    cart=cart,
+                    defaults={'quantity': quantity})
 
-            pic, pic_created = ProductCartThroughModel.objects.get_or_create(
-                product=product, cart=cart, defaults={'quantity': quantity})
+                if not pic_created:
+                    pic.quantity = quantity
+                    pic.save()
+            else:
+                message = "We dont have that many products"
 
-            if not pic_created:
-                pic.quantity = quantity
-                pic.save()
-
-        return AddProductToCartMutation(cart=cart)
+        return AddProductToCartMutation(cart=cart,
+                                        success=success,
+                                        message=message)
 
 
 class PurchaseMutation(graphene.Mutation):
@@ -239,7 +250,10 @@ class PurchaseMutation(graphene.Mutation):
                 product=product_cart.product,
                 purchase=purchase,
                 quantity=product_cart.quantity,
-                price=product_cart.product.price)
+                price=product_cart.product.price,
+            )
+            product_cart.product.qty_in_stock = product_cart.product.qty_in_stock - product_cart.quantity
+            product_cart.product.save()
 
         cart.delete()
 

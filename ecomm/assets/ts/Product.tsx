@@ -25,7 +25,7 @@ export function ProductDisplay() {
     variables: { slug: slug },
   });
   return (
-    <div className="flex bg-blue-400 content-center items-center justify-center">
+    <div className="flex content-center items-center justify-center">
       <div className="w-64">
         <img
           alt={`${data?.getProduct?.name}`}

@@ -7,6 +7,8 @@ schema {
 
 type AddProductToCartMutation {
     cart: CartType
+    message: String
+    success: Boolean
 }
 
 type BillingType {

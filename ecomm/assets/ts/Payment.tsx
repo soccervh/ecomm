@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import BillingInfo from "./queries/billingInfoQuery.graphql";
 import ShippingInfo from "./queries/shippingInfoQuery.graphql";
@@ -7,12 +7,12 @@ import { Cart } from "./Cart";
 import { Link, useHistory } from "react-router-dom";
 import CART from "./queries/cartQuery.graphql";
 import Purchase from "./queries/purchase.graphql";
+import AllProduct from "./queries/allProducts.graphql";
 
 export function Payment() {
   const { loading: lCart, error: eCart, data: dCart } = useQuery(CART);
   const shippingBillingContext = useContext(ShippingBillingContext);
   const [mutate] = useMutation(Purchase);
-
   const history = useHistory();
   console.log(shippingBillingContext);
   if (
@@ -33,6 +33,7 @@ export function Payment() {
       id: shippingBillingContext.shippingAddress.id,
     },
   });
+  let totalCostOfProducts = 0;
   return (
     <div>
       <span className={'grid grid-cols-4 max-w-md bg-gray-300"'}>
@@ -66,14 +67,17 @@ export function Payment() {
         Your Cart
         <div>
           {dCart?.cart?.products?.map(({ quantity, product }) => {
+            totalCostOfProducts += quantity * product.price;
             return (
               <div key={product.id}>
-                {product.name} {quantity} at {product.price}
+                {product.name} {quantity} at {product.price} will cost{" "}
+                {quantity * product.price}
               </div>
             );
           })}
         </div>
       </div>
+      Total cost will be {totalCostOfProducts} <div> </div>
       <button
         onClick={async (e) => {
           await mutate({
@@ -81,6 +85,11 @@ export function Payment() {
               billing: shippingBillingContext.billingAddress.id,
               shipping: shippingBillingContext.shippingAddress.id,
             },
+            refetchQueries: [
+              {
+                query: AllProduct,
+              },
+            ],
           });
           history.push(`/thankyou`);
         }}

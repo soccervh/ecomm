@@ -3,4 +3,7 @@ module.exports = {
     // tailwind.config.js
     require("@tailwindcss/ui"),
   ],
+  variants: {
+    borderStyle: ["hover"],
+  },
 };

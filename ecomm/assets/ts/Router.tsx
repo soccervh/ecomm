@@ -3,12 +3,9 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { Navbar } from "./navbar";
 import { ProductDisplay } from "./product";
 import { SigninForm } from "./Signinform";
-import { ApolloProvider } from "@apollo/react-hooks";
 import { UserProfile } from "./Userprofile";
 import { createUploadLink } from "apollo-upload-client";
 import Cookie from "universal-cookie";
-import ApolloClient from "apollo-client";
-import { InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloLink } from "apollo-link";
 import { AllProducts } from "./AllProducts";
 import { HomePage } from "./HomePage";
@@ -17,20 +14,19 @@ import { CheckOutPage } from "./CheckOutPage";
 import { Payment } from "./Payment";
 import { ShippingBillingProvider } from "./context";
 import { ThankYou } from "./ThankYou";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 const cookies = new Cookie();
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: ApolloLink.from([
-    createUploadLink({
-      uri: "/graphql/",
-      credentials: "same-origin",
-      headers: {
-        "x-csrftoken": cookies.get("csrftoken"),
-      },
-    }),
-  ]),
+  link: createUploadLink({
+    uri: "/graphql/",
+    credentials: "same-origin",
+    headers: {
+      "x-csrftoken": cookies.get("csrftoken"),
+    },
+  }),
 });
 
 export function Router() {

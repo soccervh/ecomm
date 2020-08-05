@@ -1,5 +1,7 @@
 mutation AddProductToCartMutation($id: ID!, $quantity: Int!) {
     addProductToCart(productId: $id, quantity: $quantity) {
+        message
+        success
         cart {
             id
             user {

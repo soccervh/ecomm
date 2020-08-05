@@ -19,6 +19,10 @@ export function AddMultipleToCart({ productId }) {
               id: productId,
               quantity: quantity,
             },
+          }).then(({ data }) => {
+            if (!data.addProductToCart.success) {
+              alert(data.addProductToCart.message);
+            }
           });
           return;
         }}

@@ -13,7 +13,7 @@ mutation purchase($billing: ID!, $shipping:ID!) {
                 product {
                     id
                     price
-
+                    qtyInStock
                 }
             }
         }

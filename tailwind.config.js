@@ -4,6 +4,6 @@ module.exports = {
     require("@tailwindcss/ui"),
   ],
   variants: {
-    borderStyle: ["hover"],
+    borderStyle: ["hover", "active"],
   },
 };

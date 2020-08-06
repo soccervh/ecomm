@@ -99,12 +99,14 @@ class Query(object):
         return Product.objects.select_related('category').all()
 
     def resolve_cart(self, info, **kwargs):
-        cart, created = Cart.objects.get_or_create(user=info.context.user)
+        if info.context.user.is_authenticated:
+            cart, created = Cart.objects.get_or_create(user=info.context.user)
 
-        # cart.products = ProductCartThroughModel.objects.filter(cart=cart,)
-        #save the ProductCartThroughModel
+            # cart.products = ProductCartThroughModel.objects.filter(cart=cart,)
+            #save the ProductCartThroughModel
 
-        return cart
+            return cart
+        return None
 
     def resolve_billing_info(self, info, id=None):
         if id:

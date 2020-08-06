@@ -28,16 +28,21 @@ export function CartPage() {
       }}
     >
       {({ values }) => (
-        <div className={"flex flex-wrap "}>
+        <div className={"flex flex-wrap py-4"}>
           <div className={"w-1/3"}> </div>
           <div className={"w-1/3"}>
             {data?.cart?.products?.map(({ quantity, product }, n) => {
               return (
-                <div className={"flex text-center"}>
-                  <div className={"w-24"}>
+                <div
+                  key={product.id}
+                  className={
+                    "flex flex-none text-center py-4 px-4 mb-2 border rounded border-gray-900"
+                  }
+                >
+                  <div className={"w-24 flex-none"}>
                     <img src={product.profilePic} alt={`${product.name}`} />
                   </div>
-                  <div className={"flex flex-wrap"} key={product.id}>
+                  <div className={"flex flex-wrap"}>
                     <div className={"w-full text-left mx-2"}>
                       {product.name}
                     </div>
@@ -64,6 +69,10 @@ export function CartPage() {
                               id: product.id,
                               quantity: get(values, `products.${n}.quantity`),
                             },
+                          }).then(({ data }) => {
+                            if (!data.addProductToCart.success) {
+                              alert(data.addProductToCart.message);
+                            }
                           });
                         }}
                       >
@@ -92,8 +101,13 @@ export function CartPage() {
               );
             })}
           </div>
-          <div className={"w-1/3 text-right"}>
-            <Link to={"/checkout"}>Check out!</Link>
+          <div className={"w-1/3 text-center pt-4"}>
+            <Link
+              className={`py-2 px-4 border rounded bg-yellow-200`}
+              to={"/checkout"}
+            >
+              Proceed to Check out!
+            </Link>
           </div>
         </div>
       )}

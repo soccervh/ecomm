@@ -1,7 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import UserQuery from "./queries/currentUser.graphql";
+import QueryUser from "./queries/queryUser.graphql";
 
 const SIGN_OUT = gql`
   mutation SignOut {
@@ -33,7 +33,7 @@ export const SignOut = ({ setDropDownOpen }) => {
               }
             ) {
               cache.writeQuery({
-                query: UserQuery,
+                query: QueryUser,
                 data: { currentUser: currentUser },
               });
             },

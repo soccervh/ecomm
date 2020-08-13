@@ -13,7 +13,7 @@ class Product(models.Model):
     qty_in_stock = models.IntegerField()
     category = models.ForeignKey("Category", on_delete=models.CASCADE)
     slug = models.SlugField(unique=True)
-    profile_pic = models.ImageField(blank=True, null=True)
+    product_pic = models.ImageField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.name} product"
@@ -57,10 +57,15 @@ class Billing(models.Model):
         on_delete=models.CASCADE,
     )
     name = models.CharField(max_length=64)
+    phone = models.CharField(max_length=10)
     address = models.CharField(max_length=64)
     city = models.CharField(max_length=64)
     state = models.CharField(max_length=2)
     zip = models.CharField(max_length=10)
+    last_used = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        ordering = ['-last_used']
 
 
 class Shipping(models.Model):
@@ -69,10 +74,15 @@ class Shipping(models.Model):
         on_delete=models.CASCADE,
     )
     name = models.CharField(max_length=64)
+    phone = models.CharField(max_length=10)
     address = models.CharField(max_length=64)
     city = models.CharField(max_length=64)
     state = models.CharField(max_length=2)
     zip = models.CharField(max_length=10)
+    last_used = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        ordering = ['-last_used']
 
 
 class Purchase(models.Model):

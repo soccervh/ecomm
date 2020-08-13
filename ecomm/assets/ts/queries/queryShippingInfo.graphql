@@ -1,4 +1,4 @@
-query ShippingInfo($id: Int) {
+query QueryShippingInfo($id: Int) {
     shippingInfo(id: $id) {
         user {
             id

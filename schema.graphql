@@ -15,7 +15,9 @@ type BillingType {
     address: String!
     city: String!
     id: ID!
+    lastUsed: DateTime
     name: String!
+    phone: String!
     purchaseSet: [PurchaseType!]!
     state: String!
     user: UserType!
@@ -42,7 +44,8 @@ type Mutation {
     signOut: SignOutMutation
     updateProduct(id: ID!, name: String, price: Float): ProductMutation
     updateShippingBilling(billing: BillingInputType, shipping: ShippingInputType): UpdateShippingBillingMutation
-    uploadProfilePicture(file: Upload!, id: ID): UploadMutation
+    uploadProductPicture(file: Upload!, id: ID): UploadMutation
+    userEdit(email: String, firstName: String, lastName: String): UserEditMutation
 }
 
 type ProductMutation {
@@ -64,7 +67,7 @@ type ProductType {
     id: ID!
     name: String!
     price: Float!
-    profilePic: String
+    productPic: String
     purchaseSet: [PurchaseType!]!
     qtyInStock: Int!
     skuNumber: Int!
@@ -97,7 +100,9 @@ type ShippingType {
     address: String!
     city: String!
     id: ID!
+    lastUsed: DateTime
     name: String!
+    phone: String!
     purchaseSet: [PurchaseType!]!
     state: String!
     user: UserType!
@@ -119,6 +124,10 @@ type UpdateShippingBillingMutation {
 
 type UploadMutation {
     product: ProductType
+}
+
+type UserEditMutation {
+    userEdit: UserType
 }
 
 type UserType {
@@ -147,6 +156,7 @@ input BillingInputType {
     address: String!
     city: String!
     name: String!
+    phone: String!
     state: String!
     zip: String!
 }
@@ -155,6 +165,7 @@ input ShippingInputType {
     address: String!
     city: String!
     name: String!
+    phone: String!
     state: String!
     zip: String!
 }

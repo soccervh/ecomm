@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
-import CART from "./queries/cartQuery.graphql";
+import QueryCart from "./queries/queryCart.graphql";
 import { Field, Formik } from "formik";
 import get from "lodash/get";
-import CartMutation from "./queries/cartMutation.graphql";
+import MutationAddProductToCart from "./queries/mutationAddProductToCart.graphql";
 import { CheckOutPage } from "./CheckOutPage";
 import { Link } from "react-router-dom";
 export function CartPage() {
-  const { loading, error, data } = useQuery(CART);
+  const { loading, error, data } = useQuery(QueryCart);
   const [mutationQuantity, setMutationQuantity] = useState(0);
-  const [mutate] = useMutation(CartMutation);
+  const [mutate] = useMutation(MutationAddProductToCart);
   if (loading) return <div>"Loading"</div>;
   return (
     <Formik
@@ -40,7 +40,7 @@ export function CartPage() {
                   }
                 >
                   <div className={"w-24 flex-none"}>
-                    <img src={product.profilePic} alt={`${product.name}`} />
+                    <img src={product.productPic} alt={`${product.name}`} />
                   </div>
                   <div className={"flex flex-wrap"}>
                     <div className={"w-full text-left mx-2"}>

@@ -1,4 +1,4 @@
-query AllProducts {
+query QueryAllProducts {
     allProducts {
         name
         price
@@ -7,6 +7,6 @@ query AllProducts {
         qtyInStock
         skuNumber
         slug
-        profilePic
+        productPic
     }
 }

@@ -1,0 +1,11 @@
+mutation UserEditMutation($firstName:String,$lastName:String, $email:String ) {
+    userEdit(firstName:$firstName, lastName:$lastName, email:$email) {
+        userEdit {
+            id
+            firstName
+            lastName
+            email
+            password
+        }
+    }
+}

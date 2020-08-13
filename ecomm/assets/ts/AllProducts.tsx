@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import gql from "graphql-tag";
 import FuzzySearch from "fuzzy-search";
 import classNames from "classnames";
-import AllProduct from "./queries/allProducts.graphql";
+import QueryAllProduct from "./queries/queryAllProducts.graphql";
 import { AddOneToCart } from "./AddOneToCart";
 import { useCart } from "./hooks/useCart";
 
@@ -23,7 +23,7 @@ export const USER = gql`
 `;
 
 export function AllProducts() {
-  const { loading, error, data } = useQuery(AllProduct);
+  const { loading, error, data } = useQuery(QueryAllProduct);
   const { loading: l, error: e, data: d, refetch } = useQuery(USER);
   const history = useHistory();
   const { cartData, cartError, cartLoading } = useCart();
@@ -62,7 +62,7 @@ export function AllProducts() {
               price,
               description,
               qtyInStock,
-              profilePic,
+              productPic,
               skuNumber,
               slug,
             }) => {
@@ -76,7 +76,7 @@ export function AllProducts() {
                       <Link to={`/product/${slug}`}>
                         <img
                           className=" h-32 flex-shrink-0 mx-auto bg-black"
-                          src={profilePic}
+                          src={productPic}
                           alt=""
                         />
                         <h3 className="mt-6 text-gray-900 text-sm leading-5 font-medium">

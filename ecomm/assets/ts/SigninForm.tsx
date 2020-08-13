@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { useHistory } from "react-router";
-import UserQuery from "./queries/currentUser.graphql";
-import SIGN_IN from "./queries/signIn.graphql";
+import QueryUser from "./queries/queryUser.graphql";
+import MutationSignIn from "./queries/mutationSignIn.graphql";
 
 export function SigninForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
-  const [signIn, { data }] = useMutation(SIGN_IN);
+  const [signIn, { data }] = useMutation(MutationSignIn);
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -50,7 +50,7 @@ export function SigninForm() {
                   }
                 ) {
                   cache.writeQuery({
-                    query: UserQuery,
+                    query: QueryUser,
                     data: { currentUser: user },
                   });
                 },

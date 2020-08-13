@@ -1,0 +1,48 @@
+import React from "react";
+import { Link } from "react-router-dom";
+
+export function AdminDashboard() {
+  return (
+    <div className={`flex`}>
+      <nav className={``}>
+        <Link
+          to={"/admindashboard"}
+          className="group flex flex-initial items-center px-3 py-2 text-sm leading-5 font-medium text-gray-900 rounded-md bg-gray-100 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:bg-gray-200 transition ease-in-out duration-150"
+          aria-current="page"
+        >
+          <span className="truncate flex-initial ">Dashboard</span>
+        </Link>
+        <Link
+          to={"/admindashboard/addproduct"}
+          className="mt-1 group flex  flex-initial items-center px-3 py-2 text-sm leading-5 font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150"
+        >
+          <span className="truncate flex-initial ">Add product</span>
+        </Link>
+        <a
+          href="#"
+          className="mt-1 group flex  flex-initial items-center px-3 py-2 text-sm leading-5 font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150"
+        >
+          <span className="truncate flex-initial ">Projects</span>
+        </a>
+        <a
+          href="#"
+          className="mt-1 group flex  flex-initial items-center px-3 py-2 text-sm leading-5 font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150"
+        >
+          <span className="truncate flex-initial ">Calendar</span>
+        </a>
+        <a
+          href="#"
+          className="mt-1 group flex  flex-initial items-center px-3 py-2 text-sm leading-5 font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150"
+        >
+          <span className="truncate flex-initial ">Documents</span>
+        </a>
+        <a
+          href="#"
+          className="mt-1 group flex  flex-initial items-center px-3 py-2 text-sm leading-5 font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150"
+        >
+          <span className="truncate flex-initial ">Reports</span>
+        </a>
+      </nav>
+    </div>
+  );
+}

@@ -1,4 +1,4 @@
-query BillingInfo($id: Int) {
+query QueryBillingInfo($id: Int) {
   billingInfo(id: $id) {
     user {
       id
@@ -9,5 +9,6 @@ query BillingInfo($id: Int) {
     state
     zip
     id
+
   }
 }

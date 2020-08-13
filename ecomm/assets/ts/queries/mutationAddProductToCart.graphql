@@ -1,4 +1,4 @@
-mutation AddProductToCartMutation($id: ID!, $quantity: Int!) {
+mutation MutationAddProductToCart($id: ID!, $quantity: Int!) {
     addProductToCart(productId: $id, quantity: $quantity) {
         message
         success

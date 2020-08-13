@@ -1,8 +1,9 @@
-mutation updateShippingBilling($billing:BillingInputType, $shipping:ShippingInputType) {
+mutation MutationUpdateShippingBilling($billing:BillingInputType, $shipping:ShippingInputType) {
 updateShippingBilling(billing: $billing,shipping:$shipping) {
     billing {
         id
         address
+        phone
         city
         name
         state
@@ -17,6 +18,7 @@ updateShippingBilling(billing: $billing,shipping:$shipping) {
     shipping {
         id
         address
+        phone
         city
         name
         state

@@ -1,0 +1,32 @@
+query QueryUser {
+    currentUser {
+        id
+        isSuperuser
+        username
+        lastName
+        firstName
+        email
+        dateJoined
+        billingSet {
+            id
+            address
+            city
+            state
+            zip
+            phone
+            name
+
+        }
+        shippingSet {
+            id
+            address
+            city
+            name
+            phone
+            state
+            zip
+
+
+        }
+    }
+}

@@ -3,16 +3,23 @@ import { Link } from "react-router-dom";
 import { Cart } from "../Cart";
 import { SignOut } from "../Signout";
 import { useQuery } from "@apollo/react-hooks";
-import CART from "../queries/cartQuery.graphql";
+import QueryCart from "../queries/queryCart.graphql";
 
-import UserQuery from "../queries/currentUser.graphql";
+import QueryUser from "../queries/queryUser.graphql";
 import useClickAway from "../hooks/useClickAway";
+import { AdminDashboard } from "../AdminDashboard";
 function UserName() {
-  const { loading, error, data } = useQuery(UserQuery);
+  const { loading, error, data } = useQuery(QueryUser);
 
   return (
     <div className={"capitalize"}>
-      {data?.currentUser?.username ? data?.currentUser?.username : signIn}
+      {data?.currentUser?.isSuperuser ? (
+        <Link to={"/admindashboard"}>Admin Dashboard</Link>
+      ) : data?.currentUser?.username ? (
+        data?.currentUser?.username
+      ) : (
+        signIn
+      )}
     </div>
   );
 }
@@ -31,9 +38,9 @@ function MenuItem({ children }) {
 export function NavbarNavigationbuttonsMaxWidth() {
   const [dropDownOpen, setDropDownOpen] = useState(false);
   const [dropDownCartOpen, setDropDownCartOpen] = useState(false);
-  const { data: userData } = useQuery(UserQuery);
+  const { data: userData } = useQuery(QueryUser);
 
-  const { loading, error, data } = useQuery(CART);
+  const { loading, error, data } = useQuery(QueryCart);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
   let cartItemTotal = 0;

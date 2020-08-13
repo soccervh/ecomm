@@ -3,10 +3,10 @@ import React from "react";
 import gql from "graphql-tag";
 const MUTATION = gql`
   mutation($id: ID!, $file: Upload!) {
-    uploadProfilePicture(file: $file, id: $id) {
+    uploadProductPicture(file: $file, id: $id) {
       product {
         id
-        profilePic
+        productPic
       }
     }
   }
@@ -32,7 +32,7 @@ export const FileUpload = ({ productId }) => {
 //
 // const MUTATION = gql`
 //   mutation($file: Upload!, $id: ID!) {
-//     uploadProfilePicture(file: $file, id: $id) {
+//     uploadProductPicture(file: $file, id: $id) {
 //       success
 //     }
 //   }

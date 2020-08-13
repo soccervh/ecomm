@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import AllProduct from "./queries/allProducts.graphql";
 
 export function Filter() {
   return (

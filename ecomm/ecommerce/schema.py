@@ -1,6 +1,7 @@
 import graphene
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.models import User
+from django.utils import timezone
 from graphene import String
 from graphene_file_upload.scalars import Upload
 
@@ -23,14 +24,20 @@ class ProductType(DjangoObjectType):
     class Meta:
         model = Product
 
-    def resolve_profile_pic(self, info, **kwargs):
-        if self.profile_pic:
-            return self.profile_pic.url
+    def resolve_product_pic(self, info, **kwargs):
+        if self.product_pic:
+            return self.product_pic.url
 
 
 class UserType(DjangoObjectType):
     class Meta:
         model = User
+
+    def resolve_billing_set(self, info):
+        return self.billing_set.order_by('-last_used')[:5]
+
+    def resolve_shipping_set(self, info):
+        return self.shipping_set.order_by('-last_used')[:5]
 
 
 class ProductThroughModelType(DjangoObjectType):
@@ -117,6 +124,31 @@ class Query(object):
             return Shipping.objects.get(pk=id)
 
 
+class UserEditMutation(graphene.Mutation):
+    class Arguments:
+        first_name = graphene.String()
+        last_name = graphene.String()
+        email = graphene.String()
+
+    user_edit = graphene.Field(UserType)
+
+    def mutate(self,
+               info,
+               first_name=None,
+               last_name=None,
+               email=None,
+               **kwargs):
+        user = info.context.user
+        if first_name:
+            user.first_name = first_name
+        if last_name:
+            user.last_name = last_name
+        if email:
+            user.email = email
+        user.save()
+        return UserEditMutation(user_edit=user)
+
+
 class ProductMutation(graphene.Mutation):
     class Arguments:
         # The input arguments for this mutation
@@ -181,7 +213,7 @@ class UploadMutation(graphene.Mutation):
     def mutate(self, info, file, id, **kwargs):
         # do something with your file\
         product = Product.objects.get(pk=id)
-        product.profile_pic = file
+        product.product_pic = file
         product.save()
         return UploadMutation(product=product)
 
@@ -256,6 +288,10 @@ class PurchaseMutation(graphene.Mutation):
             )
             product_cart.product.qty_in_stock = product_cart.product.qty_in_stock - product_cart.quantity
             product_cart.product.save()
+        billing.last_used = timezone.now()
+        shipping.last_used = timezone.now()
+        billing.save()
+        shipping.save()
 
         cart.delete()
 
@@ -264,6 +300,7 @@ class PurchaseMutation(graphene.Mutation):
 
 class ShippingInputType(graphene.InputObjectType):
     name = graphene.String(required=True)
+    phone = graphene.String(required=True)
     address = graphene.String(required=True)
     city = graphene.String(required=True)
     zip = graphene.String(required=True)
@@ -272,6 +309,7 @@ class ShippingInputType(graphene.InputObjectType):
 
 class BillingInputType(graphene.InputObjectType):
     name = graphene.String(required=True)
+    phone = graphene.String(required=True)
     address = graphene.String(required=True)
     city = graphene.String(required=True)
     zip = graphene.String(required=True)
@@ -291,6 +329,7 @@ class UpdateShippingBillingMutation(graphene.Mutation):
         if shipping:
             ships = Shipping.objects.create(name=shipping.name,
                                             address=shipping.address,
+                                            phone=shipping.phone,
                                             city=shipping.city,
                                             zip=shipping.zip,
                                             state=shipping.state,
@@ -299,6 +338,7 @@ class UpdateShippingBillingMutation(graphene.Mutation):
         if billing:
             bills = Billing.objects.create(name=billing.name,
                                            address=billing.address,
+                                           phone=billing.phone,
                                            city=billing.city,
                                            zip=billing.zip,
                                            state=billing.state,
@@ -310,7 +350,8 @@ class Mutation(graphene.ObjectType):
     update_product = ProductMutation.Field()
     sign_out = SignOutMutation.Field()
     sign_in = SignInMutation.Field()
-    upload_profile_picture = UploadMutation.Field()
+    upload_product_picture = UploadMutation.Field()
     add_product_to_cart = AddProductToCartMutation.Field()
     purchase = PurchaseMutation.Field()
     update_shipping_billing = UpdateShippingBillingMutation.Field()
+    user_edit = UserEditMutation.Field()

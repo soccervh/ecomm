@@ -1,18 +1,18 @@
 import React, { useContext, useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
-import BillingInfo from "./queries/billingInfoQuery.graphql";
-import ShippingInfo from "./queries/shippingInfoQuery.graphql";
+import QueryBillingInfo from "./queries/queryBillingInfo.graphql";
+import QueryShippingInfo from "./queries/queryShippingInfo.graphql";
 import { ShippingBillingContext } from "./context";
 import { Cart } from "./Cart";
 import { Link, useHistory } from "react-router-dom";
-import CART from "./queries/cartQuery.graphql";
-import Purchase from "./queries/purchase.graphql";
-import AllProduct from "./queries/allProducts.graphql";
+import QueryCart from "./queries/queryCart.graphql";
+import MutationPurchase from "./queries/mutationpurchase.graphql";
+import QueryAllProduct from "./queries/queryAllProducts.graphql";
 
 export function Payment() {
-  const { loading: lCart, error: eCart, data: dCart } = useQuery(CART);
+  const { loading: lCart, error: eCart, data: dCart } = useQuery(QueryCart);
   const shippingBillingContext = useContext(ShippingBillingContext);
-  const [mutate] = useMutation(Purchase);
+  const [mutate] = useMutation(MutationPurchase);
   const history = useHistory();
   console.log(shippingBillingContext);
   if (
@@ -23,12 +23,12 @@ export function Payment() {
     history.push(`/checkout`);
   }
 
-  const { loading, error, data } = useQuery(BillingInfo, {
+  const { loading, error, data } = useQuery(QueryBillingInfo, {
     variables: {
       id: shippingBillingContext.billingAddress.id,
     },
   });
-  const { loading: l, error: e, data: d } = useQuery(ShippingInfo, {
+  const { loading: l, error: e, data: d } = useQuery(QueryShippingInfo, {
     variables: {
       id: shippingBillingContext.shippingAddress.id,
     },
@@ -87,7 +87,7 @@ export function Payment() {
             },
             refetchQueries: [
               {
-                query: AllProduct,
+                query: QueryAllProduct,
               },
             ],
           });

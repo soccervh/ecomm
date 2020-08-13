@@ -1,20 +1,13 @@
 import React, { useState } from "react";
 import { SignOut } from "./Signout";
 import { Link, Route } from "react-router-dom";
-import useClickAway from "react-use-click-away";
 import { Simulate } from "react-dom/test-utils";
-import drop = Simulate.drop;
 import { useQuery } from "@apollo/react-hooks";
-import { SigninForm } from "./Signinform";
-import UserQuery from "./queries/currentUser.graphql";
-import { Cart } from "./Cart";
-import CartQuery from "./queries/cartQuery.graphql";
-import CART from "./queries/cartQuery.graphql";
-import useClickAway1 from "./hooks/useClickAway";
+import QueryUser from "./queries/queryUser.graphql";
 import { NavbarNavigationbuttonsMaxWidth } from "./navbarComponents/navbarNavigationbuttonsMaxWidth";
 
 function UserName() {
-  const { loading, error, data } = useQuery(UserQuery);
+  const { loading, error, data } = useQuery(QueryUser);
   return (
     <div>
       {data?.currentUser?.username ? data?.currentUser?.username : signIn}

@@ -1,4 +1,4 @@
-{
+query QueryCart{
     cart {
         id
         user {
@@ -13,7 +13,7 @@
                 price
                 qtyInStock
                 slug
-                profilePic
+                productPic
             }
         }
     }

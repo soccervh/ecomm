@@ -15,6 +15,11 @@ import { Payment } from "./Payment";
 import { ShippingBillingProvider } from "./context";
 import { ThankYou } from "./ThankYou";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { UserProfileEdit } from "./UserProfileEdit";
+import { AddressBook } from "./AddressBook";
+import { AdminDashboard } from "./AdminDashboard";
+import { ProductAdd } from "./admin/ProductAdd";
+import { ProductEdit } from "./admin/ProductEdit";
 
 const cookies = new Cookie();
 
@@ -48,6 +53,9 @@ export function Router() {
             <Route path={"/userprofile"}>
               <UserProfile />
             </Route>
+            <Route path={"/userprofileEdit"}>
+              <UserProfileEdit />
+            </Route>
             <Route path={"/"} exact={true}>
               <HomePage />
             </Route>
@@ -63,6 +71,24 @@ export function Router() {
             <Route path={"/thankyou"}>
               <ThankYou />
             </Route>
+            <Route path={"/addressbook"}>
+              <AddressBook />
+            </Route>
+            <Route
+              path="/admindashboard"
+              render={({ match: { url } }) => (
+                <div className={`flex`}>
+                  <AdminDashboard />
+
+                  <Route path={`${url}/productadd`}>
+                    <ProductAdd />
+                  </Route>
+                  <Route path={`${url}/productedit`}>
+                    <ProductEdit />
+                  </Route>
+                </div>
+              )}
+            />
           </BrowserRouter>
         </ApolloProvider>
       </ShippingBillingProvider>

@@ -2,9 +2,9 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-import { FileUpload } from "./FileUpload";
-import { AddMultipleToCart } from "./AddMultipleToCart";
-import QueryUser from "./queries/queryUser.graphql";
+import { FileUpload } from "../FileUpload";
+import { AddMultipleToCart } from "../AddMultipleToCart";
+import QueryUser from "../queries/queryUser.graphql";
 
 const PRODUCTS = gql`
   query fff($slug: String!) {
@@ -20,8 +20,8 @@ const PRODUCTS = gql`
     }
   }
 `;
-export function ProductDisplay() {
-  const { loading: lUserQuery, error: eUserQuery, data: dUserQuery } = useQuery(
+export function ProductEdit() {
+  const { loading: lQueryUser, error: eQueryUser, data: dQueryUser } = useQuery(
     QueryUser
   );
 
@@ -36,7 +36,7 @@ export function ProductDisplay() {
           alt={`${data?.getProduct?.name}`}
           src={data?.getProduct?.productPic}
         />
-        {dUserQuery?.currentUser?.isSuperuser ? (
+        {dQueryUser?.currentUser?.isSuperuser ? (
           <FileUpload productId={data?.getProduct?.id} />
         ) : (
           ""

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
-import AddProductToCartMutation from "./queries/cartMutation.graphql";
+import MutationAddProductToCart from "./queries/mutationAddProductToCart.graphql";
 
 export function AddOneToCart({ productId, productQtyInStock, productQty = 0 }) {
-  const [mutate] = useMutation(AddProductToCartMutation);
+  const [mutate] = useMutation(MutationAddProductToCart);
   const [addOneMoreToCart, setAddOneMoreToCart] = useState(productQty + 1);
   return (
     <button

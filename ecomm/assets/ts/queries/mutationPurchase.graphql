@@ -1,4 +1,4 @@
-mutation purchase($billing: ID!, $shipping:ID!) {
+mutation MutationPurchase($billing: ID!, $shipping:ID!) {
     purchase(billingId: $billing, shippingId:$shipping) {
 
         cart {

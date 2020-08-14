@@ -1,9 +1,9 @@
 import React from "react";
-import QueryUser from "./queries/queryUser.graphql";
+import QueryUser from "../queries/queryUser.graphql";
 
 import { useQuery } from "@apollo/react-hooks";
 import { Link } from "react-router-dom";
-import QueryBillingInfo from "./queries/queryBillingInfo.graphql";
+import QueryBillingInfo from "../queries/queryBillingInfo.graphql";
 
 export function UserProfile() {
   const { loading, error, data } = useQuery(QueryUser);

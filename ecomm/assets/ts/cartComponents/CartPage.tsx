@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
-import QueryCart from "./queries/queryCart.graphql";
+import QueryCart from "../queries/queryCart.graphql";
 import { Field, Formik } from "formik";
 import get from "lodash/get";
-import MutationAddProductToCart from "./queries/mutationAddProductToCart.graphql";
-import { CheckOutPage } from "./CheckOutPage";
+import MutationAddProductToCart from "../queries/mutationAddProductToCart.graphql";
 import { Link } from "react-router-dom";
 export function CartPage() {
   const { loading, error, data } = useQuery(QueryCart);

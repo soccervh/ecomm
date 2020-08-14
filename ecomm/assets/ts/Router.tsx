@@ -2,21 +2,21 @@ import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import { Navbar } from "./navbar";
 import { ProductDisplay } from "./product";
-import { SigninForm } from "./Signinform";
-import { UserProfile } from "./Userprofile";
+import { SigninForm } from "./userComponents/Signinform";
+import { UserProfile } from "./userComponents/UserProfile";
 import { createUploadLink } from "apollo-upload-client";
 import Cookie from "universal-cookie";
 import { ApolloLink } from "apollo-link";
 import { AllProducts } from "./AllProducts";
 import { HomePage } from "./HomePage";
-import { CartPage } from "./CartPage";
-import { CheckOutPage } from "./CheckOutPage";
+import { CartPage } from "./cartComponents/CartPage";
+import { BillingShippingPage } from "./BillingShippingPage";
 import { Payment } from "./Payment";
 import { ShippingBillingProvider } from "./context";
 import { ThankYou } from "./ThankYou";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import { UserProfileEdit } from "./UserProfileEdit";
-import { AddressBook } from "./AddressBook";
+import { UserProfileEdit } from "./userComponents/UserProfileEdit";
+import { AddressBook } from "./userComponents/AddressBook";
 import { AdminDashboard } from "./AdminDashboard";
 import { ProductAdd } from "./admin/ProductAdd";
 import { ProductEdit } from "./admin/ProductEdit";
@@ -63,7 +63,7 @@ export function Router() {
               <CartPage />
             </Route>
             <Route path={"/checkout"}>
-              <CheckOutPage />
+              <BillingShippingPage />
             </Route>
             <Route path={"/payment"}>
               <Payment />

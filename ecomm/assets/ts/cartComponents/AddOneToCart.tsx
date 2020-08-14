@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
-import MutationAddProductToCart from "./queries/mutationAddProductToCart.graphql";
+import MutationAddProductToCart from "../queries/mutationAddProductToCart.graphql";
 
 export function AddOneToCart({ productId, productQtyInStock, productQty = 0 }) {
   const [mutate] = useMutation(MutationAddProductToCart);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import QueryUser from "./queries/queryUser.graphql";
+import QueryUser from "../queries/queryUser.graphql";
 import { useQuery } from "@apollo/client";
 
 export function AddressBook() {

@@ -3,30 +3,17 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { FileUpload } from "../FileUpload";
-import { AddMultipleToCart } from "../AddMultipleToCart";
+import { AddMultipleToCart } from "../cartComponents/AddMultipleToCart";
 import QueryUser from "../queries/queryUser.graphql";
+import QueryProduct from "../queries/queryProduct.graphql";
 
-const PRODUCTS = gql`
-  query fff($slug: String!) {
-    getProduct(slug: $slug) {
-      name
-      price
-      id
-      description
-      qtyInStock
-      skuNumber
-      slug
-      productPic
-    }
-  }
-`;
 export function ProductEdit() {
   const { loading: lQueryUser, error: eQueryUser, data: dQueryUser } = useQuery(
     QueryUser
   );
 
   let { slug } = useParams();
-  const { loading, error, data } = useQuery(PRODUCTS, {
+  const { loading, error, data } = useQuery(QueryProduct, {
     variables: { slug: slug },
   });
   return (

@@ -1,1 +1,0 @@
-main page have a random layout of 10 pics.

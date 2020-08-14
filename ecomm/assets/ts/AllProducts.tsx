@@ -2,29 +2,16 @@ import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import gql from "graphql-tag";
 import FuzzySearch from "fuzzy-search";
 import classNames from "classnames";
 import QueryAllProduct from "./queries/queryAllProducts.graphql";
-import { AddOneToCart } from "./AddOneToCart";
+import { AddOneToCart } from "./cartComponents/AddOneToCart";
 import { useCart } from "./hooks/useCart";
-
-export const USER = gql`
-  query currentUserQuery {
-    currentUser {
-      id
-      username
-      firstName
-      lastName
-      email
-      dateJoined
-    }
-  }
-`;
+import QueryUser from "./queries/queryUser.graphql";
 
 export function AllProducts() {
   const { loading, error, data } = useQuery(QueryAllProduct);
-  const { loading: l, error: e, data: d, refetch } = useQuery(USER);
+  const { loading: l, error: e, data: d, refetch } = useQuery(QueryUser);
   const history = useHistory();
   const { cartData, cartError, cartLoading } = useCart();
   const [filter, setFilter] = useState("");

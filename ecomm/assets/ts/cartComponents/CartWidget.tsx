@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Link } from "react-router-dom";
-import QueryCart from "./queries/queryCart.graphql";
+import QueryCart from "../queries/queryCart.graphql";
 
-export function Cart() {
+export function CartWidget() {
   const { loading, error, data } = useQuery(QueryCart);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;

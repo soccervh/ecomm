@@ -1,0 +1,12 @@
+query QueryProduct($slug: String!) {
+    getProduct(slug: $slug) {
+        name
+        price
+        id
+        description
+        qtyInStock
+        skuNumber
+        slug
+        productPic
+    }
+}

@@ -3,7 +3,6 @@ import { useMutation, useQuery } from "@apollo/react-hooks";
 import QueryBillingInfo from "./queries/queryBillingInfo.graphql";
 import QueryShippingInfo from "./queries/queryShippingInfo.graphql";
 import { ShippingBillingContext } from "./context";
-import { Cart } from "./Cart";
 import { Link, useHistory } from "react-router-dom";
 import QueryCart from "./queries/queryCart.graphql";
 import MutationPurchase from "./queries/mutationpurchase.graphql";

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Cart } from "../Cart";
-import { SignOut } from "../Signout";
+import { CartWidget } from "../cartComponents/CartWidget";
+import { SignOut } from "../userComponents/Signout";
 import { useQuery } from "@apollo/react-hooks";
 import QueryCart from "../queries/queryCart.graphql";
 
@@ -63,7 +63,7 @@ export function NavbarNavigationbuttonsMaxWidth() {
             aria-orientation="vertical"
             aria-labelledby="user-menu"
           >
-            <Cart />
+            <CartWidget />
           </div>
         </div>
       </div>

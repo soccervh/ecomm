@@ -1,7 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import QueryUser from "./queries/queryUser.graphql";
+import QueryUser from "../queries/queryUser.graphql";
 
 const SIGN_OUT = gql`
   mutation SignOut {

@@ -1,0 +1,8 @@
+mutation MutationProductImage($id: ID!, $file: Upload!) {
+    uploadProductPicture(file: $file, id: $id) {
+        product {
+            id
+            productPic
+        }
+    }
+}

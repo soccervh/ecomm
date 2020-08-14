@@ -85,7 +85,7 @@ const schema = yup.object({
       .max(5, "We only need 5 numbers"),
   }),
 });
-export function CheckOutPage() {
+export function BillingShippingPage() {
   const shippingBillingContext = useContext(ShippingBillingContext);
   const [mutate, { data, loading }] = useMutation(
     MutationUpdateShippingBilling

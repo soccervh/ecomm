@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { SignOut } from "./Signout";
 import { Link, Route } from "react-router-dom";
-import { Simulate } from "react-dom/test-utils";
 import { useQuery } from "@apollo/react-hooks";
 import QueryUser from "./queries/queryUser.graphql";
 import { NavbarNavigationbuttonsMaxWidth } from "./navbarComponents/navbarNavigationbuttonsMaxWidth";

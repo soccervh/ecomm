@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { useHistory } from "react-router";
-import QueryUser from "./queries/queryUser.graphql";
-import MutationSignIn from "./queries/mutationSignIn.graphql";
+import QueryUser from "../queries/queryUser.graphql";
+import MutationSignIn from "../queries/mutationSignIn.graphql";
 
 export function SigninForm() {
   const [username, setUsername] = useState("");

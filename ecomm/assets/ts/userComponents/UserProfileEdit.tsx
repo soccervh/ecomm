@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import QueryUser from "./queries/queryUser.graphql";
-import UserEditMutation from "./queries/mutationUserEdit.graphql";
+import QueryUser from "../queries/queryUser.graphql";
+import UserEditMutation from "../queries/mutationUserEdit.graphql";
 import { useMutation } from "@apollo/react-hooks";
 import { Field, Form, Formik } from "formik";
 import { useQuery } from "@apollo/client";

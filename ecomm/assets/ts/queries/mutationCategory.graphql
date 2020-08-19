@@ -1,0 +1,9 @@
+mutation MuationCategory($id:ID, $name: String) {
+    addUpdateCategory(id:$id, name: $name) {
+        category {
+            id
+            name
+
+        }
+    }
+}

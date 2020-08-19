@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 
 # Create your models here.
+from django.db.models.signals import post_save
 from django.forms import ModelForm
 
 
@@ -117,3 +118,17 @@ class ProductPurchaseThroughModel(models.Model):
                                 related_name='purchase_products')
     quantity = models.IntegerField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,
+                                on_delete=models.CASCADE,
+                                related_name='user_profile')
+    is_guest_user = models.BooleanField(default=False)
+
+
+def create_user_profile(sender, instance, created, **kwargs):
+    UserProfile.objects.get_or_create(user=instance)
+
+
+post_save.connect(create_user_profile, sender=settings.AUTH_USER_MODEL)

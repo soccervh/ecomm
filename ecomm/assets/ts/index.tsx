@@ -3,7 +3,7 @@ import { render } from "react-dom";
 import { Router } from "./Router";
 function App() {
   return (
-    <div className={"bg-blue-100"}>
+    <div className={"bg-gray-300"}>
       <Router />
     </div>
   );

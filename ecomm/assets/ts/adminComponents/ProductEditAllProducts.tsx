@@ -4,12 +4,12 @@ import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import FuzzySearch from "fuzzy-search";
 import classNames from "classnames";
-import QueryAllProduct from "./queries/queryAllProducts.graphql";
-import { AddOneToCart } from "./cartComponents/AddOneToCart";
-import { useCart } from "./hooks/useCart";
-import QueryUser from "./queries/queryUser.graphql";
+import QueryAllProduct from "../queries/queryAllProducts.graphql";
+import { AddOneToCart } from "../cartComponents/AddOneToCart";
+import { useCart } from "../hooks/useCart";
+import QueryUser from "../queries/queryUser.graphql";
 
-export function AllProducts() {
+export function ProductEditAllProducts() {
   const { loading, error, data } = useQuery(QueryAllProduct);
   const { loading: l, error: e, data: d, refetch } = useQuery(QueryUser);
   const history = useHistory();
@@ -18,6 +18,9 @@ export function AllProducts() {
   if (loading || l) return <p>Loading.....</p>;
   if (error || e) return <p>Error :(</p>;
 
+  if (!d.currentUser) {
+    history.push("/login");
+  }
   const searcher = new FuzzySearch(
     data?.allProducts || [],
     ["name", "description"],
@@ -57,7 +60,7 @@ export function AllProducts() {
                 <div key={id}>
                   <li className="col-span-1 flex flex-col text-center bg-white rounded-lg shadow">
                     <div className="flex-1 flex flex-col p-8">
-                      <Link to={`/product/${slug}`}>
+                      <Link to={`/admindashboard/productEdit/${slug}`}>
                         <img
                           className=" h-32 flex-shrink-0 mx-auto bg-black"
                           src={productPic}

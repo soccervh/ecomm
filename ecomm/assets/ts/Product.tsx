@@ -23,7 +23,7 @@ export function ProductDisplay() {
           src={data?.getProduct?.productPic}
         />
         {dUserQuery?.currentUser?.isSuperuser ? (
-          <FileUpload productId={data?.getProduct?.id} />
+          <FileUpload name={"poop"} />
         ) : (
           ""
         )}

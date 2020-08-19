@@ -39,17 +39,14 @@ type CategoryType {
 
 type Mutation {
     addProductToCart(productId: ID!, quantity: Int): AddProductToCartMutation
+    addUpdateCategory(id: ID, name: String): UpsertCategoryMutation
     purchase(billingId: ID!, shippingId: ID!): PurchaseMutation
     signIn(password: String, username: String): SignInMutation
     signOut: SignOutMutation
-    updateProduct(id: ID!, name: String, price: Float): ProductMutation
+    updateProduct(input: ProductMutationInput): UpsertProductMutation
     updateShippingBilling(billing: BillingInputType, shipping: ShippingInputType): UpdateShippingBillingMutation
     uploadProductPicture(file: Upload!, id: ID): UploadMutation
     userEdit(email: String, firstName: String, lastName: String): UserEditMutation
-}
-
-type ProductMutation {
-    product: ProductType
 }
 
 type ProductThroughModelType {
@@ -126,6 +123,14 @@ type UploadMutation {
     product: ProductType
 }
 
+type UpsertCategoryMutation {
+    category: CategoryType
+}
+
+type UpsertProductMutation {
+    product: ProductType
+}
+
 type UserEditMutation {
     userEdit: UserType
 }
@@ -159,6 +164,18 @@ input BillingInputType {
     phone: String!
     state: String!
     zip: String!
+}
+
+input ProductMutationInput {
+    category: String
+    description: String
+    id: ID
+    name: String
+    price: Float
+    productImage: Upload
+    qtyInStock: Int
+    skuNumber: String
+    slug: String
 }
 
 input ShippingInputType {

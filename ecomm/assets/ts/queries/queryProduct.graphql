@@ -1,5 +1,9 @@
 query QueryProduct($slug: String!) {
     getProduct(slug: $slug) {
+        category {
+            id
+            name
+        }
         name
         price
         id

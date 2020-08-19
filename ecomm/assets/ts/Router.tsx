@@ -18,8 +18,9 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { UserProfileEdit } from "./userComponents/UserProfileEdit";
 import { AddressBook } from "./userComponents/AddressBook";
 import { AdminDashboard } from "./AdminDashboard";
-import { ProductAdd } from "./admin/ProductAdd";
-import { ProductEdit } from "./admin/ProductEdit";
+import { ProductAdd } from "./adminComponents/ProductAdd";
+import { ProductEditAllProducts } from "./adminComponents/ProductEditAllProducts";
+import { ProductEdit } from "./adminComponents/ProductEdit";
 
 const cookies = new Cookie();
 
@@ -83,7 +84,10 @@ export function Router() {
                   <Route path={`${url}/productadd`}>
                     <ProductAdd />
                   </Route>
-                  <Route path={`${url}/productedit`}>
+                  <Route path={`${url}/productEditAllProducts`}>
+                    <ProductEditAllProducts />
+                  </Route>
+                  <Route path={`${url}/productEdit/:slug`}>
                     <ProductEdit />
                   </Route>
                 </div>

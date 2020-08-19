@@ -14,7 +14,12 @@ function UserName() {
   return (
     <div className={"capitalize"}>
       {data?.currentUser?.isSuperuser ? (
-        <Link to={"/admindashboard"}>Admin Dashboard</Link>
+        <Link to={"/admindashboard"}>
+          {" "}
+          <span className="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 border-solid border-2 border-gray-700 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">
+            Admin Dashboard
+          </span>{" "}
+        </Link>
       ) : data?.currentUser?.username ? (
         data?.currentUser?.username
       ) : (
@@ -149,7 +154,11 @@ export function NavbarNavigationbuttonsMaxWidth() {
             </button>
           </div>
           <div className="flex-shrink-0 flex items-center">
-            <img className="" src="../img/logo_size.jpg" alt="Lorenz logo" />
+            <img
+              className=""
+              src="../img/LorenzEnterprisesLogo.png"
+              alt="Lorenz logo"
+            />
           </div>
           <div className="hidden md:ml-6 md:flex md:items-center">
             <Link
@@ -252,9 +261,7 @@ export function NavbarNavigationbuttonsMaxWidth() {
               </div>
             </div>
           </div>
-          <span className="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 border-solid border-2 border-gray-700 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">
-            <UserName />
-          </span>
+          <UserName />
         </div>
       </div>
     </div>

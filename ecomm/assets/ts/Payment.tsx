@@ -33,35 +33,45 @@ export function Payment() {
     },
   });
   let totalCostOfProducts = 0;
+  const billingArray = [
+    { billing: "Name", billingInfo: data?.billingInfo?.name },
+    { billing: "Address", billingInfo: data?.billingInfo?.address },
+    { billing: "City", billingInfo: data?.billingInfo?.city },
+    { billing: "State", billingInfo: data?.billingInfo?.state },
+    { billing: "Zip", billingInfo: data?.billingInfo?.zip },
+  ];
+  const shippingArray = [
+    { shipping: "Name", shippingInfo: d?.shippingInfo?.name },
+    { shipping: "Address", shippingInfo: d?.shippingInfo?.address },
+    { shipping: "City", shippingInfo: d?.shippingInfo?.city },
+    { shipping: "State", shippingInfo: d?.shippingInfo?.state },
+    { shipping: "Zip", shippingInfo: d?.shippingInfo?.zip },
+  ];
+
   return (
     <div>
-      <span className={'grid grid-cols-4 max-w-md bg-gray-300"'}>
-        <span>Billing</span>
-        <span> </span>
-        <span>Shipping</span>
-        <span> </span>
-        <span>Name -</span>
-        <span>{data?.billingInfo?.name}</span>
-        <span>Name -</span>
-        <span>{d?.shippingInfo?.name}</span>
-        <span>Address -</span>
-        <span>{data?.billingInfo?.address}</span>
-        <span>Address -</span>
-        <span>{d?.shippingInfo?.address}</span>
-        <span>City -</span>
-        <span>{data?.billingInfo?.city}</span>
-        <span>City -</span>
-        <span>{d?.shippingInfo?.city}</span>
-        <span>State -</span>
-        <span>{data?.billingInfo?.state}</span>
-        <span>State -</span>
-        <span>{d?.shippingInfo?.state}</span>
-        <span>Zip -</span>
-        <span>{data?.billingInfo?.zip}</span>
-
-        <span>Zip -</span>
-        <span>{d?.shippingInfo?.zip}</span>
-      </span>
+      <div className={``}>
+        <div className={``}>
+          <div>Billing</div>
+          {billingArray.map((e) => {
+            return (
+              <div className={`flex`}>
+                <div>{e.billing} - </div>
+                <div>{e.billingInfo}</div>
+              </div>
+            );
+          })}
+        </div>
+        <div>Shipping</div>
+        {shippingArray.map((e) => {
+          return (
+            <div className={`flex`}>
+              <div>{e.shipping} - </div>
+              <div>{e.shippingInfo}</div>
+            </div>
+          );
+        })}
+      </div>
       <div>
         Your Cart
         <div>

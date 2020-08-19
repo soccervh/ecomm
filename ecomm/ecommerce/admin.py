@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 from django.contrib import admin
 from .models import Product, Category, Cart, ProductCartThroughModel, Purchase, ProductPurchaseThroughModel, Billing, \
-    Shipping
+    Shipping, UserProfile
 
 
 @admin.register(ProductCartThroughModel)
@@ -24,3 +24,4 @@ admin.site.register(Cart)
 admin.site.register(Purchase)
 admin.site.register(Billing)
 admin.site.register(Shipping)
+admin.site.register(UserProfile)

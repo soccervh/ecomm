@@ -1,0 +1,19 @@
+mutation MutationProduct($input:ProductMutationInput) {
+    updateProduct(input:$input) {
+        product {
+            category {
+                id
+                name
+            }
+            description
+            id
+            name
+            price
+            productPic
+            qtyInStock
+            skuNumber
+            slug
+
+        }
+    }
+}

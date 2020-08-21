@@ -8,6 +8,8 @@ import QueryCart from "../queries/queryCart.graphql";
 import QueryUser from "../queries/queryUser.graphql";
 import useClickAway from "../hooks/useClickAway";
 import { AdminDashboard } from "../AdminDashboard";
+const signIn = <Link to={"/login"}>SignIn</Link>;
+
 function UserName() {
   const { loading, error, data } = useQuery(QueryUser);
 
@@ -15,21 +17,21 @@ function UserName() {
     <div className={"capitalize"}>
       {data?.currentUser?.isSuperuser ? (
         <Link to={"/admindashboard"}>
-          {" "}
           <span className="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 border-solid border-2 border-gray-700 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">
             Admin Dashboard
-          </span>{" "}
+          </span>
         </Link>
-      ) : data?.currentUser?.username ? (
-        data?.currentUser?.username
       ) : (
-        signIn
+        <Link to={"/login"}>
+          <span className="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 border-solid border-2 border-gray-700 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">
+            SignIn
+          </span>
+        </Link>
       )}
     </div>
   );
 }
 
-const signIn = <Link to={"/login"}>SignIn</Link>;
 function MenuItem({ children }) {
   return (
     <a
@@ -252,7 +254,9 @@ export function NavbarNavigationbuttonsMaxWidth() {
                       "capitalize rounded-full h-10 w-10 flex items-center justify-center bg-gray-200 ml-2 text-2xl"
                     }
                   >
-                    {userData?.currentUser?.username.charAt(0)}
+                    {userData?.currentUser?.username.length < 30
+                      ? userData?.currentUser?.username.charAt(0)
+                      : ""}
                   </div>
                 </button>
                 {dropDownOpen && (

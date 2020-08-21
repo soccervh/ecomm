@@ -120,11 +120,36 @@ class SignInMutation(graphene.Mutation):
         username = graphene.String()
         password = graphene.String()
 
-    def mutate(self, info, username, password):
+    def mutate(self, info, username, password, **kwargs):
+        # check t ot see if info.context.user is authenticated and if it is,
+        if info.context.user.is_authenticated:
+            # then check to see that the user is a guest user via user.user_profile.is_guest_user
+            if info.context.user.user_profile.is_guest_user:
+                # If it IS a guest user, then set a variable to their Cart
+                cart, created = Cart.objects.get_or_create(
+                    user=info.context.user)
+                # THEN if they SUCCESSFULLY log in, then transfer the products and quantities from their Cart that
+                # this variable points to, to their actual User Cart.
         user = authenticate(username=username, password=password)
+
         if user is not None:
             login(info.context, user)
-            return SignInMutation(user=user)
+            if cart:
+                actual_cart, created = Cart.objects.get_or_create(user=user)
+
+                for product_and_quantity in cart.cart_products.all():
+                    # the cart is going to have products in it
+                    # go through each ProductCartThroughModel that is in the the cart variable
+                    # and add it to the actual_cart
+                    #
+                    pic, pic_created = ProductCartThroughModel.objects.get_or_create(
+                        product=product_and_quantity.product,
+                        cart=actual_cart,
+                        defaults={'quantity': product_and_quantity.quantity})
+                    pic.quantity = product_and_quantity.quantity
+                    pic.save()
+
+        return SignInMutation(user=user)
 
 
 class SignOutMutation(graphene.Mutation):

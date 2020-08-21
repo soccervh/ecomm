@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import MutationAddProductToCart from "../queries/mutationAddProductToCart.graphql";
+import QueryCart from "../queries/queryCart.graphql";
 
 export function AddMultipleToCart({ productId }) {
   const [mutate] = useMutation(MutationAddProductToCart);
@@ -19,6 +20,11 @@ export function AddMultipleToCart({ productId }) {
               id: productId,
               quantity: quantity,
             },
+            refetchQueries: [
+              {
+                query: QueryCart,
+              },
+            ],
           }).then(({ data }) => {
             if (!data.addProductToCart.success) {
               alert(data.addProductToCart.message);

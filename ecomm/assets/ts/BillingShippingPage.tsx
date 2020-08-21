@@ -174,7 +174,6 @@ export function BillingShippingPage() {
       {({ values, handleSubmit, errors, touched, setFieldValue }) => (
         <form onSubmit={handleSubmit} className={`grid justify-center `}>
           <div className={`flex`}>
-            <div className={`w-1/4`}></div>
             <div className={`w-1200 grid grid-cols-3`}>
               {(dQueryUser?.currentUser?.billingSet || []).map((d) => {
                 return (
@@ -195,8 +194,6 @@ export function BillingShippingPage() {
                 );
               })}
             </div>
-
-            <div className={`w-1/4`}></div>
           </div>
           <div className={`${billingAddressContainer}`}>
             <span className={`${billingAddressInformation}`}>

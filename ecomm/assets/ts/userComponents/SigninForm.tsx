@@ -3,6 +3,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { useHistory } from "react-router";
 import QueryUser from "../queries/queryUser.graphql";
 import MutationSignIn from "../queries/mutationSignIn.graphql";
+import QueryCart from "../queries/queryCart.graphql";
 
 export function SigninForm() {
   const [username, setUsername] = useState("");
@@ -53,6 +54,11 @@ export function SigninForm() {
                     data: { currentUser: user },
                   });
                 },
+                refetchQueries: [
+                  {
+                    query: QueryCart,
+                  },
+                ],
               });
               console.log("doing this");
               if (d.data.signIn.user) {

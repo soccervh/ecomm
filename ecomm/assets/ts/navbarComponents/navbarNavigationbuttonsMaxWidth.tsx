@@ -47,11 +47,11 @@ export function NavbarNavigationbuttonsMaxWidth() {
   const [dropDownCartOpen, setDropDownCartOpen] = useState(false);
   const { data: userData } = useQuery(QueryUser);
 
-  const { loading, error, data } = useQuery(QueryCart);
+  const { loading, error, data: cartData } = useQuery(QueryCart);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
   let cartItemTotal = 0;
-  data.cart?.products?.forEach(({ quantity }) => {
+  cartData.cart?.products?.forEach(({ quantity }) => {
     cartItemTotal += quantity;
   });
   const CartToggle = ({ handleClose }) => {
@@ -169,62 +169,30 @@ export function NavbarNavigationbuttonsMaxWidth() {
             >
               Products
             </Link>
-            <a
-              href="#"
-              className="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out"
-            >
-              Projects
-            </a>
-            <a
-              href="#"
-              className="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out"
-            >
-              Calendar
-            </a>
           </div>
         </div>
         <div className="flex items-center">
           <div className="flex-shrink-0">
-            <span className="rounded-md shadow-sm">
-              <button
-                type="button"
-                className="relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-400 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-600 active:bg-indigo-600 transition duration-150 ease-in-out"
-              >
-                <svg
-                  className="-ml-1 mr-2 h-5 w-5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <span>New Job</span>
-              </button>
-            </span>
+            <span className="rounded-md shadow-sm" />
           </div>
           <div className="hidden md:ml-4 md:flex-shrink-0 md:flex md:items-center">
             <div className="ml-3 relative ">
               <div id="cart">
                 <button
                   onClick={() => setDropDownCartOpen(true)}
-                  className="p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-gray-300 focus:outline-none focus:text-gray-500 focus:bg-gray-100 transition duration-150 ease-in-out"
-                  aria-label="Notifications"
+                  className="p-1 border-2 border-transparent text-gray-400 rounded-full  focus:outline-none "
+                  aria-label="cart"
                 >
                   <svg
-                    className="h-6 w-6"
-                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    stroke="currentColor"
+                    fill="whitesmoke"
+                    width="36px"
+                    height="36px"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                    />
+                    <path d="M0 0h24v24H0V0z" fill="none" />
+                    <path d="M15.55 11l2.76-5H6.16l2.37 5z" opacity=".3" />
+                    <path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" />
                   </svg>
                   {cartItemTotal > 0 && (
                     <span className="absolute top-0 right-0 block h-4 w-4 transform -translate-y-1 translate-x-1 rounded-full text-white text-xs shadow-solid bg-blue-700">
@@ -241,28 +209,32 @@ export function NavbarNavigationbuttonsMaxWidth() {
             </div>
 
             <div className="ml-3 relative">
-              <div id="navbar" className={`relative`}>
-                <button
-                  onClick={() => setDropDownOpen(true)}
-                  className="flex  text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out"
-                  id="user-menu"
-                  aria-label="User menu"
-                  aria-haspopup="true"
-                >
-                  <div
-                    className={
-                      "capitalize rounded-full h-10 w-10 flex items-center justify-center bg-gray-200 ml-2 text-2xl"
-                    }
+              {userData?.currentUser?.isActive ? (
+                <div id="navbar" className={`relative`}>
+                  <button
+                    onClick={() => setDropDownOpen(true)}
+                    className="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out"
+                    id="user-menu"
+                    aria-label="User menu"
+                    aria-haspopup="true"
                   >
-                    {userData?.currentUser?.username.length < 30
-                      ? userData?.currentUser?.username.charAt(0)
-                      : ""}
-                  </div>
-                </button>
-                {dropDownOpen && (
-                  <UserToggle handleClose={() => setDropDownOpen(false)} />
-                )}
-              </div>
+                    <div
+                      className={
+                        "capitalize rounded-full h-10 w-10 flex items-center justify-center bg-gray-200 ml-2 text-2xl"
+                      }
+                    >
+                      {userData?.currentUser?.username.length < 30
+                        ? userData?.currentUser?.username.charAt(0)
+                        : ""}
+                    </div>
+                  </button>
+                  {dropDownOpen && (
+                    <UserToggle handleClose={() => setDropDownOpen(false)} />
+                  )}
+                </div>
+              ) : (
+                <div className="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out capitalize rounded-full h-10 w-10 flex items-center justify-center bg-gray-200 ml-2 text-2xl" />
+              )}
             </div>
           </div>
           <UserName />

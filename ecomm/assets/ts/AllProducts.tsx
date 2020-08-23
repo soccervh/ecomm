@@ -77,7 +77,6 @@ export function AllProducts() {
                           <AddOneToCart
                             productId={id}
                             productQtyInStock={qtyInStock}
-                            productQty={foundProduct?.quantity}
                           />
                         </dd>
                       </dl>

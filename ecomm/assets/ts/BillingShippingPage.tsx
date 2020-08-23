@@ -8,13 +8,13 @@ import * as yup from "yup";
 import { useQuery } from "@apollo/client";
 import QueryUser from "./queries/queryUser.graphql";
 let billingText =
-  "px-2 mt-2 border border-red-900 rounded bg-red-100 p-1 text-right";
+  "px-2 mt-2 border border-red-900 rounded bg-red-100 p-1 text-right ";
 let billingUserInput =
-  " mt-2 border-2 border-red-900 rounded active:border-red-500 p-1  bg-white ";
+  "mt-2 border-2 border-red-900 rounded active:border-red-500 p-1 bg-white";
 let addressText =
   "px-2 mt-2 border border-blue-900 rounded bg-blue-100 p-1 text-right";
 let addressUserInput =
-  " mt-2 border-2 border-blue-900 rounded active:border-blue-500 p-1 bg-white ";
+  " mt-2 border-2 border-blue-900 rounded active:border-blue-500 p-1 bg-white";
 
 function BillingField({ name, children }) {
   const [value, meta, helpers] = useField(name);
@@ -23,7 +23,12 @@ function BillingField({ name, children }) {
     <Fragment>
       <span className={`${billingText} `}>{children} -</span>
       <span className={`${billingUserInput} `}>
-        <Field id={name} className={`outline-none`} type="text" name={name} />
+        <Field
+          id={name}
+          className={`outline-none w-60`}
+          type="text"
+          name={name}
+        />
       </span>
       <div
         className={`text-xs text-red-500 col-span-2 flex  justify-end pr-2 my-1`}
@@ -41,7 +46,7 @@ function ShippingField({ name, children }) {
     <Fragment>
       <span className={`${addressText} `}>{children} -</span>
       <span className={`${addressUserInput} `}>
-        <Field className={`outline-none`} type="text" name={name} />
+        <Field className={`outline-none w-60`} type="text" name={name} />
       </span>
       <div
         className={`text-xs text-red-500 col-span-2 flex justify-end pr-2 my-1`}
@@ -95,7 +100,8 @@ export function BillingShippingPage() {
 
   // Css shortcut variables
 
-  let billingAddressContainer = "bg-gray-200 border rounded shadow m-4";
+  let billingAddressContainer =
+    "bg-gray-200 border rounded shadow m-4 text-center justify-center";
   let billingAddressInformation = "ml-8 mb-2 border-b border-gray-900";
   useEffect(() => {
     if (data && !loading) {
@@ -174,10 +180,13 @@ export function BillingShippingPage() {
       {({ values, handleSubmit, errors, touched, setFieldValue }) => (
         <form onSubmit={handleSubmit} className={`grid justify-center `}>
           <div className={`flex`}>
-            <div className={`w-1200 grid grid-cols-3`}>
+            <div className={` grid grid-cols-5`}>
               {(dQueryUser?.currentUser?.billingSet || []).map((d) => {
                 return (
-                  <div key={d.id} className={`border rounded m-2`}>
+                  <div
+                    key={d.id}
+                    className={`border rounded m-2 bg-white p-2 text-center `}
+                  >
                     <button
                       onClick={(e) => {
                         setFieldValue("billing", d);
@@ -185,7 +194,7 @@ export function BillingShippingPage() {
                     >
                       <div>{d.name}</div>
                       <div>{d.address}</div>
-                      <div>{d.city}</div>
+                      <div>{d.city},</div>
                       <div>{d.state}</div>
                       <div>{d.zip}</div>
                       <div>{d.phone}</div>
@@ -199,14 +208,17 @@ export function BillingShippingPage() {
             <span className={`${billingAddressInformation}`}>
               Billing Information:
             </span>
-            <span className={"grid grid-cols-2 max-w-md col-gap-2"}>
-              {billingFormikValuesArray.map(({ values, children }) => (
-                <BillingField name={values} children={children} />
-              ))}
-            </span>
+            <div className={`w-128 m-auto`}>
+              <span className={"grid grid-cols-2  col-gap-2"}>
+                {billingFormikValuesArray.map(({ values, children }) => (
+                  <BillingField name={values} children={children} />
+                ))}
+              </span>
+            </div>
           </div>
-          <div>
+          <div className={`m-auto`}>
             <button
+              className={`justify-center border-2 rounded w-128 bg-green-200 hover:bg-green-300 shadow`}
               type={"button"}
               onClick={(f) => {
                 setFieldValue("shipping", values.billing);
@@ -219,18 +231,22 @@ export function BillingShippingPage() {
             <span className={`${billingAddressInformation}`}>
               Shipping Information:
             </span>
-            <span className={"grid grid-cols-2 max-w-md col-gap-2"}>
-              {shippingFormikValuesArray.map(({ values, children }) => (
-                <ShippingField name={values} children={children} />
-              ))}
-            </span>
+            <div className={`w-128 m-auto`}>
+              <span className={"grid grid-cols-2 col-gap-2"}>
+                {shippingFormikValuesArray.map(({ values, children }) => (
+                  <ShippingField name={values} children={children} />
+                ))}
+              </span>
+            </div>
           </div>
-          <button
-            className={`bg-white border rounded border-gray-900 my-4 hover:bg-yellow-100`}
-            type={"submit"}
-          >
-            Save and Go to payment
-          </button>
+          <div className={`m-auto`}>
+            <button
+              className={` w-128 border rounded border-gray-900 my-4 bg-yellow-100 hover:bg-yellow-200`}
+              type={"submit"}
+            >
+              Save and Go to payment
+            </button>
+          </div>
         </form>
       )}
     </Formik>

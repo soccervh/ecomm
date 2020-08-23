@@ -17,17 +17,17 @@ export function CartWidget() {
           <div key={product.id}>
             <Link
               to={`/product/${product.slug}`}
-              className={`flex justify-between py-1 px-1 hover:bg-gray-100`}
+              className={`flex justify-between py-1 px-1 hover:bg-gray-100 rounded`}
             >
               <span>{product.name}</span> <span>{quantity}</span>
             </Link>
           </div>
         );
       })}
-      <div className={`my-2 border`}></div>
+      <div className={`my-2 border`} />
       <Link
         to={"/cartpage"}
-        className={`flex items-center justify-center hover:bg-gray-100 border-double border-4 border-gray-600 hover:border-red-500`}
+        className={`flex items-center justify-center rounded hover:bg-gray-100 border-double border-4 border-gray-600 hover:border-red-500`}
       >
         <span> Go to Cart</span>
         <svg

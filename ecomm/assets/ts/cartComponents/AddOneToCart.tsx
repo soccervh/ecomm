@@ -1,24 +1,29 @@
-import React, { useState } from "react";
-import { useMutation } from "@apollo/react-hooks";
+import React, { useEffect, useState } from "react";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import MutationAddProductToCart from "../queries/mutationAddProductToCart.graphql";
 import QueryCart from "../queries/queryCart.graphql";
+import QueryUser from "../queries/queryUser.graphql";
 
-export function AddOneToCart({ productId, productQtyInStock, productQty = 0 }) {
+export function AddOneToCart({ productId, productQtyInStock }) {
   const [mutate] = useMutation(MutationAddProductToCart);
-  const [addOneMoreToCart, setAddOneMoreToCart] = useState(productQty + 1);
+  const { loading: lCart, error: eCart, data: dCart } = useQuery(QueryCart);
+
+  // upon clicking add to cart it will add the current quantity + 1
+
+  const quantityToSetCartTo =
+    (dCart?.cart?.cartProducts.find((cartProduct) => {
+      return cartProduct.product.id == productId;
+    })?.quantity || 0) + 1;
   return (
     <button
       onClick={(e) => {
         if (productQtyInStock === 0) {
           alert("Out Of stock!");
-        }
-        if (productQtyInStock < addOneMoreToCart) {
-          alert("We don't have that many in stock.");
         } else {
           mutate({
             variables: {
               id: productId,
-              quantity: addOneMoreToCart,
+              quantity: quantityToSetCartTo,
             },
             refetchQueries: [
               {
@@ -26,7 +31,6 @@ export function AddOneToCart({ productId, productQtyInStock, productQty = 0 }) {
               },
             ],
           });
-          setAddOneMoreToCart(addOneMoreToCart + 1);
 
           return;
         }

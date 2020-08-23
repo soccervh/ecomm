@@ -121,6 +121,7 @@ class SignInMutation(graphene.Mutation):
         password = graphene.String()
 
     def mutate(self, info, username, password, **kwargs):
+        cart = None
         # check t ot see if info.context.user is authenticated and if it is,
         if info.context.user.is_authenticated:
             # then check to see that the user is a guest user via user.user_profile.is_guest_user
@@ -138,6 +139,7 @@ class SignInMutation(graphene.Mutation):
                 actual_cart, created = Cart.objects.get_or_create(user=user)
 
                 for product_and_quantity in cart.cart_products.all():
+
                     # the cart is going to have products in it
                     # go through each ProductCartThroughModel that is in the the cart variable
                     # and add it to the actual_cart
@@ -155,17 +157,13 @@ class SignInMutation(graphene.Mutation):
 class SignOutMutation(graphene.Mutation):
     current_user = graphene.Field(UserType)
 
-    def mutate(self, info):
+    def mutate(self, info, **kwargs):
 
         user = info.context.user
-        if user.is_authenticated or user.is_superuser:
+        if user.is_authenticated:
             logout(info.context)
 
-        current_user = None
-        if info.context.user.is_authenticated:
-            current_user = info.context.user
-
-        return SignOutMutation(current_user=current_user)
+        return SignOutMutation(current_user=user)
 
 
 class UploadMutation(graphene.Mutation):
@@ -230,7 +228,7 @@ class AddProductToCartMutation(graphene.Mutation):
                     pic.quantity = quantity
                     pic.save()
             else:
-                message = "We dont have that many products"
+                message = "We dont have that many."
 
         return AddProductToCartMutation(cart=cart,
                                         success=success,

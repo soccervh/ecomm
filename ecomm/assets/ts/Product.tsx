@@ -22,11 +22,6 @@ export function ProductDisplay() {
           alt={`${data?.getProduct?.name}`}
           src={data?.getProduct?.productPic}
         />
-        {dUserQuery?.currentUser?.isSuperuser ? (
-          <FileUpload name={"poop"} />
-        ) : (
-          ""
-        )}
       </div>
       <div className=" ml-8 flex flex-col  ">
         Picture of {slug} <div className="  ">{data?.getProduct?.name}</div>

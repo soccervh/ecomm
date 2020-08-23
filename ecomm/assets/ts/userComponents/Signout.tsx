@@ -45,6 +45,9 @@ export const SignOut = ({ setDropDownOpen }) => {
               {
                 query: QueryCart,
               },
+              {
+                query: QueryUser,
+              },
             ],
           });
         }}

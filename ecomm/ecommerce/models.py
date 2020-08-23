@@ -51,6 +51,9 @@ class Cart(models.Model):
         through='ProductCartThroughModel',
     )
 
+    def __str__(self):
+        return self.user.username
+
 
 class Billing(models.Model):
     user = models.ForeignKey(

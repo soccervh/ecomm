@@ -1,12 +1,24 @@
 query QueryUser {
     currentUser {
         id
+        isActive
         isSuperuser
         username
         lastName
         firstName
         email
         dateJoined
+
+        cart {
+            id
+cartProducts {
+    product {
+        id
+        name
+    }
+    quantity
+    id
+}        }
         billingSet {
             id
             address

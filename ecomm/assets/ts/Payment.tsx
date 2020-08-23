@@ -7,18 +7,19 @@ import { Link, useHistory } from "react-router-dom";
 import QueryCart from "./queries/queryCart.graphql";
 import MutationPurchase from "./queries/mutationpurchase.graphql";
 import QueryAllProduct from "./queries/queryAllProducts.graphql";
+import MutationProduct from "./queries/mutationProduct.graphql";
 
 export function Payment() {
   const { loading: lCart, error: eCart, data: dCart } = useQuery(QueryCart);
   const shippingBillingContext = useContext(ShippingBillingContext);
-  const [mutate] = useMutation(MutationPurchase);
+  const [purchaseCart] = useMutation(MutationPurchase);
+  const [mutationProduct] = useMutation(MutationProduct);
   const history = useHistory();
   console.log(shippingBillingContext);
   if (
     !shippingBillingContext.billingAddress?.id ||
     !shippingBillingContext.shippingAddress?.id
   ) {
-    console.log("here");
     history.push(`/checkout`);
   }
 
@@ -49,28 +50,30 @@ export function Payment() {
   ];
 
   return (
-    <div>
-      <div className={``}>
+    <div className={``}>
+      <div className={`grid grid-cols-2 max-w-3xl m-auto`}>
         <div className={``}>
           <div>Billing</div>
           {billingArray.map((e) => {
             return (
-              <div className={`flex`}>
+              <div className={`flex w-64`}>
                 <div>{e.billing} - </div>
                 <div>{e.billingInfo}</div>
               </div>
             );
           })}
         </div>
-        <div>Shipping</div>
-        {shippingArray.map((e) => {
-          return (
-            <div className={`flex`}>
-              <div>{e.shipping} - </div>
-              <div>{e.shippingInfo}</div>
-            </div>
-          );
-        })}
+        <div>
+          <div>Shipping</div>
+          {shippingArray.map((e) => {
+            return (
+              <div className={`flex w-64`}>
+                <div>{e.shipping} -</div>
+                <div>{e.shippingInfo}</div>
+              </div>
+            );
+          })}
+        </div>
       </div>
       <div>
         Your Cart
@@ -89,7 +92,7 @@ export function Payment() {
       Total cost will be {totalCostOfProducts} <div> </div>
       <button
         onClick={async (e) => {
-          await mutate({
+          await purchaseCart({
             variables: {
               billing: shippingBillingContext.billingAddress.id,
               shipping: shippingBillingContext.shippingAddress.id,
@@ -100,6 +103,7 @@ export function Payment() {
               },
             ],
           });
+
           history.push(`/thankyou`);
         }}
       >

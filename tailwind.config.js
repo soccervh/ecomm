@@ -6,4 +6,9 @@ module.exports = {
   variants: {
     borderStyle: ["hover", "active"],
   },
+  theme: {
+    extend: {
+      width: { 128: "32rem" },
+    },
+  },
 };

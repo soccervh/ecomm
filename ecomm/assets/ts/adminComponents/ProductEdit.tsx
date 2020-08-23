@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Fragment } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/react-hooks";
-import { FileUpload } from "../FileUpload";
+import { FileUpload } from "./AdminFileUpload";
 import QueryUser from "../queries/queryUser.graphql";
 import QueryProduct from "../queries/queryProduct.graphql";
 import { Field, FieldArray, Form, Formik } from "formik";

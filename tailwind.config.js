@@ -9,6 +9,9 @@ module.exports = {
   theme: {
     extend: {
       width: { 128: "32rem" },
+      animation: {
+        "spin-slow": "spin 3s linear infinite",
+      },
     },
   },
 };

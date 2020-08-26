@@ -7,7 +7,8 @@ from ecommerce.schema.types import UserType, CategoryType, ProductType, CartType
 class Query(object):
     current_user = graphene.Field(UserType)
     all_categories = graphene.List(CategoryType)
-    all_products = graphene.List(ProductType)
+    all_products = graphene.List(ProductType,
+                                 category_slug=graphene.String(required=False))
     get_product = graphene.Field(ProductType,
                                  id=graphene.Int(),
                                  slug=graphene.String())
@@ -31,9 +32,12 @@ class Query(object):
     def resolve_all_categories(self, info, **kwargs):
         return Category.objects.all()
 
-    def resolve_all_products(self, info, **kwargs):
+    def resolve_all_products(self, info, category_slug=None, **kwargs):
         # We can easily optimize query count in the resolve method
-        return Product.objects.select_related('category').all()
+        if category_slug is None:
+            return Product.objects.select_related('category').all()
+        return Product.objects.select_related('category').filter(
+            category__slug=category_slug)
 
     def resolve_cart(self, info, **kwargs):
         if info.context.user.is_authenticated:

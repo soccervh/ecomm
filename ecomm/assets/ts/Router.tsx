@@ -42,7 +42,7 @@ export function Router() {
         <ApolloProvider client={client}>
           <BrowserRouter>
             <Navbar />
-            <Route path="/products">
+            <Route path="/products(/)?:categorySlug?">
               <AllProducts />
             </Route>
             <Route path="/login">

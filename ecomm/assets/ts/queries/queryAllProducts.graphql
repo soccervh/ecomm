@@ -1,5 +1,5 @@
-query QueryAllProducts {
-    allProducts {
+query QueryAllProducts($categorySlug: String) {
+    allProducts (categorySlug: $categorySlug){
         name
         price
         id

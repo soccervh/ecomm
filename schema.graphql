@@ -35,6 +35,7 @@ type CategoryType {
     id: ID!
     name: String!
     productSet: [ProductType!]!
+    slug: String!
 }
 
 type Mutation {
@@ -85,7 +86,7 @@ type PurchaseType {
 
 type Query {
     allCategories: [CategoryType]
-    allProducts: [ProductType]
+    allProducts(categorySlug: String): [ProductType]
     billingInfo(id: Int): BillingType
     cart: CartType
     currentUser: UserType

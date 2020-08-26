@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-
+from django_extensions.db.fields import AutoSlugField
 # Create your models here.
 from django.db.models.signals import post_save
 from django.forms import ModelForm
@@ -20,8 +20,15 @@ class Product(models.Model):
         return f"{self.name} product"
 
 
+def slugify_function(content):
+    return content.replace('_', '-').replace(' ', '-').lower()
+
+
 class Category(models.Model):
     name = models.CharField(max_length=30)
+    slug = AutoSlugField(populate_from="name",
+                         slugify_function=slugify_function,
+                         editable=True)
 
     class Meta:
         # Gives the proper plural name for admin

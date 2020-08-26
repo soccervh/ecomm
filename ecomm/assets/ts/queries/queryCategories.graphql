@@ -2,5 +2,6 @@ query QueryCategories {
     allCategories {
         name
         id
+    slug
     }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
@@ -8,37 +8,74 @@ import QueryAllProduct from "./queries/queryAllProducts.graphql";
 import { AddOneToCart } from "./cartComponents/AddOneToCart";
 import { useCart } from "./hooks/useCart";
 import QueryUser from "./queries/queryUser.graphql";
+import QueryAllCategories from "./queries/queryCategories.graphql";
+import { useParams } from "react-router-dom";
+import QueryProduct from "./queries/queryProduct.graphql";
+import { useLazyQuery } from "@apollo/client";
 
 export function AllProducts() {
-  const { loading, error, data } = useQuery(QueryAllProduct);
-  const { loading: l, error: e, data: d, refetch } = useQuery(QueryUser);
+  let { categorySlug } = useParams();
+  const {
+    loading: lQueryAllCategories,
+    error: eQueryAllCategories,
+    data: dQueryAllCategories,
+  } = useQuery(QueryAllCategories);
+  const [
+    queryAllProduct,
+    { loading, error, data: dataQueryAllProducts },
+  ] = useLazyQuery(QueryAllProduct);
+
+  useEffect(() => {
+    queryAllProduct({ variables: { categorySlug: categorySlug } });
+  }, [categorySlug]);
+  const { loading: lQueryUser, error: eQueryUser, data: d, refetch } = useQuery(
+    QueryUser
+  );
   const history = useHistory();
   const { cartData, cartError, cartLoading } = useCart();
-  const [filter, setFilter] = useState("");
-  if (loading || l) return <p>Loading.....</p>;
-  if (error || e) return <p>Error :(</p>;
-
+  const [productFilter, setProductFilter] = useState("");
+  if (loading || lQueryUser) return <p>Loading...</p>;
+  if (error || eQueryUser) return <p>Error :(</p>;
   const searcher = new FuzzySearch(
-    data?.allProducts || [],
+    dataQueryAllProducts?.allProducts || [],
     ["name", "description"],
     {
       caseSensitive: false,
     }
   );
+
   return (
     <div>
-      <input
-        className={
-          "bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-lg appearance-none leading-normal m-4"
-        }
-        placeholder={"search"}
-        onChange={(e) => {
-          setFilter(e.target.value);
-        }}
-      />
+      <div className={`flex`}>
+        <input
+          className={
+            "bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-lg appearance-none leading-normal m-4"
+          }
+          placeholder={"search"}
+          onChange={(e) => {
+            setProductFilter(e.target.value);
+          }}
+        />
+
+        <div className={`flex`}>
+          {dQueryAllCategories?.allCategories.map(({ id, name, slug }) => {
+            return (
+              <div className={`flex`}>
+                <Link
+                  to={`/products/${slug}`}
+                  className={`p-1 h-8 mr-3 mt-5 px-3 bg-white rounded hover:bg-gray-200 active:bg-blue-200 align-center text-center appearance-none leading-normal`}
+                  key={id}
+                >
+                  {name}
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+      </div>
       <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 px-4">
         {searcher
-          .search(filter)
+          .search(productFilter)
           .map(
             ({
               id,

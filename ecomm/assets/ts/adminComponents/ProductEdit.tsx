@@ -178,6 +178,7 @@ export function ProductEdit() {
 
               <div className={`mt-4 col-span-2 flex justify-end`}>
                 <button
+                  id={`product`}
                   className={`p-4 border bg-white rounded hover:bg-blue-200 transition ease-in-out duration-300`}
                   type={"submit"}
                 >

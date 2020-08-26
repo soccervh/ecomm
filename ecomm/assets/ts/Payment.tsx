@@ -51,31 +51,33 @@ export function Payment() {
 
   return (
     <div className={``}>
-      <div className={`grid grid-cols-2 max-w-3xl m-auto`}>
-        <div className={``}>
+      <div
+        className={`grid gap-2 grid-cols-2 max-w-2xl m-auto text-center rounded shadow`}
+      >
+        <div className={`bg-gray-100 mt-2`}>
           <div>Billing</div>
           {billingArray.map((e) => {
             return (
-              <div className={`flex w-64`}>
-                <div>{e.billing} - </div>
-                <div>{e.billingInfo}</div>
+              <div className={`flex `}>
+                <div className={`w-32 text-right mr-2`}>{e.billing} - </div>
+                <div> {e.billingInfo}</div>
               </div>
             );
           })}
         </div>
-        <div>
+        <div className={`bg-gray-100 mt-2`}>
           <div>Shipping</div>
           {shippingArray.map((e) => {
             return (
-              <div className={`flex w-64`}>
-                <div>{e.shipping} -</div>
-                <div>{e.shippingInfo}</div>
+              <div className={`flex`}>
+                <div className={`w-32 text-right mr-2`}>{e.shipping} -</div>
+                <div> {e.shippingInfo}</div>
               </div>
             );
           })}
         </div>
       </div>
-      <div>
+      <div className={`grid m-auto`}>
         Your Cart
         <div>
           {dCart?.cart?.products?.map(({ quantity, product }) => {

@@ -28,6 +28,7 @@ export function ProductEdit() {
     MutationCategory
   );
   const [showAddCategory, setShowAddCategory] = useState(false);
+  const [showSaved, setShowSaved] = useState(false);
   useEffect(() => {
     if (data?.getProduct?.slug && slug !== data?.getProduct?.slug) {
       history.push(`/admindashboard/productEdit/${data?.getProduct?.slug}`);
@@ -177,14 +178,17 @@ export function ProductEdit() {
               />
 
               <div className={`mt-4 col-span-2 flex justify-end`}>
+                {showSaved ? <span>Saved</span> : ""}
                 <button
                   id={`product`}
                   className={`p-4 border bg-white rounded hover:bg-blue-200 transition ease-in-out duration-300`}
                   type={"submit"}
+                  onClick={() => {
+                    return setShowSaved(true);
+                  }}
                 >
                   Submit Changes
-                </button>
-                
+                </button>{" "}
               </div>
               <div className={`col-span-2`}>
                 {eMutationProduct?.graphQLErrors.map(({ message }, i) => (

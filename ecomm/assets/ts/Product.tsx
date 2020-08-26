@@ -11,7 +11,8 @@ export function ProductDisplay() {
     QueryUser
   );
 
-  let { slug } = useParams();
+  // @ts-ignore
+    let { slug } = useParams();
   const { loading, error, data } = useQuery(QueryProduct, {
     variables: { slug: slug },
   });

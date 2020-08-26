@@ -24,7 +24,6 @@ SECRET_KEY = '2cl-#e9ym)cx7l0yi137&y7cwa@vfid!yla(%10*$v77-z@n0o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -32,7 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.admin', 'django.contrib.auth',
     'django.contrib.contenttypes', 'django.contrib.sessions',
     'django.contrib.messages', 'django.contrib.staticfiles', 'ecommerce',
-    'graphene_django', 'django_extensions'
+    'graphene_django', 'django_extensions', 'webpack_loader'
 ]
 
 GRAPHENE = {'SCHEMA': 'ecomm.schema.schema'}
@@ -104,6 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
+ALLOWED_HOSTS = ["*"]
 
 LANGUAGE_CODE = 'en-us'
 
@@ -121,3 +121,19 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/home/docker/code/app/ecomm/media/'
+
+def stats_file():
+    if DEBUG:
+        stats_file = "webpack-stats.json"
+    else:
+        stats_file = "webpack-prod-stats.json"
+
+    return stats_file
+
+WEBPACK_LOADER = {
+    "DEFAULT": {
+        "CACHE": not DEBUG,
+        "BUNDLE_DIR_NAME": "bundles/",
+        "STATS_FILE": os.path.join(BASE_DIR, stats_file()),
+    }
+}

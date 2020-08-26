@@ -2,6 +2,8 @@ version: '3.7'
 services:
   ecomm:
     image: ecommerce
+    build:
+      context: .
     volumes:
       - .:/home/docker/code/app
     ports:

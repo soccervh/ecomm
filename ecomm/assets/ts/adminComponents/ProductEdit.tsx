@@ -19,6 +19,7 @@ export function ProductEdit() {
     data: dQueryCategories,
   } = useQuery(QueryCategories);
 
+  // @ts-ignore
   let { slug } = useParams();
   const history = useHistory();
   const [getPRoduct, { loading, error, data }] = useLazyQuery(QueryProduct);

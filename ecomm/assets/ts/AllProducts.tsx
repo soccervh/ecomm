@@ -14,6 +14,7 @@ import QueryProduct from "./queries/queryProduct.graphql";
 import { useLazyQuery } from "@apollo/client";
 
 export function AllProducts() {
+  // @ts-ignore
   let { categorySlug } = useParams();
   const {
     loading: lQueryAllCategories,
@@ -28,22 +29,26 @@ export function AllProducts() {
   useEffect(() => {
     queryAllProduct({ variables: { categorySlug: categorySlug } });
   }, [categorySlug]);
-  const { loading: lQueryUser, error: eQueryUser, data: d, refetch } = useQuery(
-    QueryUser
-  );
+
   const history = useHistory();
   const { cartData, cartError, cartLoading } = useCart();
   const [productFilter, setProductFilter] = useState("");
-  if (loading || lQueryUser) return <p>Loading...</p>;
-  if (error || eQueryUser) return <p>Error :(</p>;
+
+  // @ts-ignore
+
+  if ( loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+
   const searcher = new FuzzySearch(
-    dataQueryAllProducts?.allProducts || [],
-    ["name", "description"],
-    {
-      caseSensitive: false,
-    }
+      dataQueryAllProducts?.allProducts || [],
+      ["name", "description"],
+      {
+        caseSensitive: false,
+      }
   );
 
+  console.log(lQueryAllCategories)
+  console.log(dQueryAllCategories)
   return (
     <div>
       <div className={`flex`}>
@@ -56,15 +61,15 @@ export function AllProducts() {
             setProductFilter(e.target.value);
           }}
         />
-
         <div className={`flex`}>
           {dQueryAllCategories?.allCategories.map(({ id, name, slug }) => {
             return (
-              <div className={`flex`}>
+              <div
+                  key={id}
+                  className={`flex`}>
                 <Link
                   to={`/products/${slug}`}
                   className={`p-1 h-8 mr-3 mt-5 px-3 bg-white rounded hover:bg-gray-200 active:bg-blue-200 align-center text-center appearance-none leading-normal`}
-                  key={id}
                 >
                   {name}
                 </Link>

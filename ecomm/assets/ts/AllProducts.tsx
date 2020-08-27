@@ -47,8 +47,6 @@ export function AllProducts() {
       }
   );
 
-  console.log(lQueryAllCategories)
-  console.log(dQueryAllCategories)
   return (
     <div>
       <div className={`flex`}>
@@ -62,6 +60,15 @@ export function AllProducts() {
           }}
         />
         <div className={`flex`}>
+          <div
+              className={`flex`}>
+            <Link
+                to={`/products/`}
+                className={`p-1 h-8 mr-3 mt-5 px-3 bg-white rounded hover:bg-gray-200 active:bg-blue-200 align-center text-center appearance-none leading-normal`}
+            >
+              All
+            </Link>
+          </div>
           {dQueryAllCategories?.allCategories.map(({ id, name, slug }) => {
             return (
               <div

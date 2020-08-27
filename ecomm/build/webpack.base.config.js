@@ -83,34 +83,7 @@ module.exports = {
     alias: {
       "~index": path.join(__dirname, `../assets/ts/index`),
       "~common": path.join(__dirname, `../assets/ts/common`),
-      "tailwindcss/lib/util/createUtilityPlugin": path.join(
-        __dirname,
-        `../assets/ts/pagebuilder/containers/createUtilityPlugin.js`,
-      ),
     },
   },
-  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          name: "vendor",
-          test: (module) => {
-            let adminModules = [
-              `semantic-ui-react`,
-              "semantic-ui-css",
-              "react-sortable-hoc",
-              "react-beautiful-dnd",
-              "react-chartjs-2",
-            ];
-            const t =
-              /[\\/]node_modules[\\/](.*)[\\/]/.test(module.resource) &&
-              !some(adminModules, module.resource);
-            // console.log(t,  module.resource)
-            return t;
-          },
-          chunks: "all",
-        },
-      },
-    },
-  },
+
 };

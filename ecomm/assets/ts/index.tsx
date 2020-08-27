@@ -2,8 +2,7 @@ import React from "react";
 import { render } from "react-dom";
 import { Router } from "./Router";
 
-console.log('hiiiiiiiiiiiiii')
-alert('hi')
+
 function App() {
   return (
     <div className={"bg-gray-300"}>

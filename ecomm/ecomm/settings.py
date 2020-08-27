@@ -120,7 +120,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/home/docker/code/app/ecomm/media/'
+MEDIA_ROOT = '/home/docker/code/app/media/'
 
 def stats_file():
     if DEBUG:

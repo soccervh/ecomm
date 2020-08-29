@@ -1,6 +1,6 @@
-mutation UserEditMutation($input:UserMutationInput) {
-    userEdit(input:$input) {
-        userEdit {
+mutation SignUpMutation($input:UserMutationInput) {
+    signUp(input:$input) {
+        user {
             username
             id
             firstName

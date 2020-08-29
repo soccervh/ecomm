@@ -179,7 +179,15 @@ export function ProductEdit() {
               />
 
               <div className={`mt-4 col-span-2 flex justify-end`}>
-                {showSaved ? <span>Saved</span> : ""}
+                {showSaved ? (
+                  <span
+                    className={`m-4 text-blue-600 font-semibold transition ease-in-out duration-800`}
+                  >
+                    Saved
+                  </span>
+                ) : (
+                  ""
+                )}
                 <button
                   id={`product`}
                   className={`p-4 border bg-white rounded hover:bg-blue-200 transition ease-in-out duration-300`}

@@ -4,6 +4,7 @@ import { useHistory } from "react-router";
 import QueryUser from "../queries/queryUser.graphql";
 import MutationSignIn from "../queries/mutationSignIn.graphql";
 import QueryCart from "../queries/queryCart.graphql";
+import { Link } from "react-router-dom";
 
 export function SigninForm() {
   const [username, setUsername] = useState("");
@@ -22,13 +23,13 @@ export function SigninForm() {
           Sign in to your account
         </h2>
         <p className="mt-2 text-center text-sm leading-5 text-gray-600 max-w">
-          Or
-          <a
-            href="#"
+          Or{" "}
+          <Link
+            to={`/signup`}
             className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"
           >
-            start your 14-day free trial
-          </a>
+            Create an Account
+          </Link>
         </p>
       </div>
 
@@ -60,7 +61,7 @@ export function SigninForm() {
                   },
                 ],
               });
-              console.log("doing this");
+
               if (d.data.signIn.user) {
                 history.push("/products");
               }

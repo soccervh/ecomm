@@ -11,8 +11,8 @@ import { AdminDashboard } from "../AdminDashboard";
 const signIn = <Link to={"/login"}>SignIn</Link>;
 
 function UserName() {
-  const { loading, error, data } = useQuery(QueryUser);
-
+  const { loading: lQueryUser, error, data } = useQuery(QueryUser);
+  if (lQueryUser) return <p>Loading...</p>;
   return (
     <div className={"capitalize"}>
       {data?.currentUser?.isSuperuser ? (
@@ -21,6 +21,11 @@ function UserName() {
             Admin Dashboard
           </span>
         </Link>
+      ) : (
+        <div />
+      )}
+      {data?.currentUser?.username.length < 30 ? (
+        <div />
       ) : (
         <Link to={"/login"}>
           <span className="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 border-solid border-2 border-gray-700 text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">

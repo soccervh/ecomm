@@ -21,6 +21,7 @@ import { AdminDashboard } from "./AdminDashboard";
 import { ProductAdd } from "./adminComponents/ProductAdd";
 import { ProductEditAllProducts } from "./adminComponents/ProductEditAllProducts";
 import { ProductEdit } from "./adminComponents/ProductEdit";
+import { SignUp } from "./userComponents/SignUp";
 
 const cookies = new Cookie();
 
@@ -47,6 +48,9 @@ export function Router() {
             </Route>
             <Route path="/login">
               <SigninForm />
+            </Route>{" "}
+            <Route path="/signup">
+              <SignUp />
             </Route>
             <Route path={"/product/:slug"}>
               <ProductDisplay />

@@ -36,15 +36,15 @@ export function AllProducts() {
 
   // @ts-ignore
 
-  if ( loading) return <p>Loading...</p>;
+  if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
   const searcher = new FuzzySearch(
-      dataQueryAllProducts?.allProducts || [],
-      ["name", "description"],
-      {
-        caseSensitive: false,
-      }
+    dataQueryAllProducts?.allProducts || [],
+    ["name", "description"],
+    {
+      caseSensitive: false,
+    }
   );
 
   return (
@@ -60,20 +60,17 @@ export function AllProducts() {
           }}
         />
         <div className={`flex`}>
-          <div
-              className={`flex`}>
+          <div className={`flex`}>
             <Link
-                to={`/products/`}
-                className={`p-1 h-8 mr-3 mt-5 px-3 bg-white rounded hover:bg-gray-200 active:bg-blue-200 align-center text-center appearance-none leading-normal`}
+              to={`/products/`}
+              className={`p-1 h-8 mr-3 mt-5 px-3 bg-white rounded hover:bg-gray-200 active:bg-blue-200 align-center text-center appearance-none leading-normal`}
             >
               All
             </Link>
           </div>
           {dQueryAllCategories?.allCategories.map(({ id, name, slug }) => {
             return (
-              <div
-                  key={id}
-                  className={`flex`}>
+              <div key={id} className={`flex`}>
                 <Link
                   to={`/products/${slug}`}
                   className={`p-1 h-8 mr-3 mt-5 px-3 bg-white rounded hover:bg-gray-200 active:bg-blue-200 align-center text-center appearance-none leading-normal`}
@@ -103,8 +100,8 @@ export function AllProducts() {
                 return product.product.id === id;
               });
               return (
-                <div key={id}>
-                  <li className="col-span-1 flex flex-col text-center bg-white rounded-lg shadow">
+                <div className={``} key={id}>
+                  <li className="col-span-1 flex flex-col text-center bg-white rounded-lg shadow ">
                     <div className="flex-1 flex flex-col p-8">
                       <Link to={`/product/${slug}`}>
                         <img

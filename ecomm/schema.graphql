@@ -44,10 +44,11 @@ type Mutation {
     purchase(billingId: ID!, shippingId: ID!): PurchaseMutation
     signIn(password: String, username: String): SignInMutation
     signOut: SignOutMutation
+    signUp(input: UserMutationInput): SignUpMutation
     updateProduct(input: ProductMutationInput): UpsertProductMutation
     updateShippingBilling(billing: BillingInputType, shipping: ShippingInputType): UpdateShippingBillingMutation
     uploadProductPicture(file: Upload!, id: ID): UploadMutation
-    userEdit(email: String, firstName: String, lastName: String): UserEditMutation
+    userEdit(input: UserMutationInput): UserEditMutation
 }
 
 type ProductThroughModelType {
@@ -113,6 +114,10 @@ type SignInMutation {
 
 type SignOutMutation {
     currentUser: UserType
+}
+
+type SignUpMutation {
+    user: UserType
 }
 
 type UpdateShippingBillingMutation {
@@ -186,6 +191,14 @@ input ShippingInputType {
     phone: String!
     state: String!
     zip: String!
+}
+
+input UserMutationInput {
+    email: String
+    firstName: String
+    lastName: String
+    password: String
+    username: String
 }
 
 

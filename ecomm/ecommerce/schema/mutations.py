@@ -11,27 +11,81 @@ from ecommerce.models import Purchase, Shipping, Cart, Billing, ProductPurchaseT
 from ecommerce.schema.types import CartType, ProductType, UserType, ShippingType, BillingType, CategoryType
 
 
+class UserMutationInput(graphene.InputObjectType):
+    username = graphene.String()
+    password = graphene.String()
+    first_name = graphene.String()
+    last_name = graphene.String()
+    email = graphene.String()
+
+
+class SignUpMutation(graphene.Mutation):
+    class Arguments:
+        input = UserMutationInput()
+    user = graphene.Field(UserType)
+    def mutate(self,info,input,**kwargs):
+        user = User.objects.create_user(
+            email=input.email,
+            username=input.username,
+            password= input.password
+        )
+
+        user.first_name = input.first_name
+        user.last_name = input.last_name
+        user.save()
+        cart = None
+        # check t ot see if info.context.user is authenticated and if it is,
+        if info.context.user.is_authenticated:
+            # then check to see that the user is a guest user via user.user_profile.is_guest_user
+            if info.context.user.user_profile.is_guest_user:
+                # If it IS a guest user, then set a variable to their Cart
+                cart, created = Cart.objects.get_or_create(
+                    user=info.context.user)
+        user = authenticate(username=user.username, password=input.password)
+
+        login(info.context, user)
+        if cart:
+            actual_cart, created = Cart.objects.get_or_create(user=user)
+
+            for product_and_quantity in cart.cart_products.all():
+
+                # the cart is going to have products in it
+                # go through each ProductCartThroughModel that is in the the cart variable
+                # and add it to the actual_cart
+                #
+                pic, pic_created = ProductCartThroughModel.objects.get_or_create(
+                    product=product_and_quantity.product,
+                    cart=actual_cart,
+                    defaults={'quantity': product_and_quantity.quantity})
+                pic.quantity = product_and_quantity.quantity
+                pic.save()
+        return SignUpMutation(user=user)
+
+
+
 class UserEditMutation(graphene.Mutation):
     class Arguments:
-        first_name = graphene.String()
-        last_name = graphene.String()
-        email = graphene.String()
+        input = UserMutationInput()
 
     user_edit = graphene.Field(UserType)
 
     def mutate(self,
                info,
-               first_name=None,
-               last_name=None,
-               email=None,
+               input,
                **kwargs):
-        user = info.context.user
-        if first_name:
-            user.first_name = first_name
-        if last_name:
-            user.last_name = last_name
-        if email:
-            user.email = email
+
+
+        user = info.contect.user
+        if input.first_name:
+            user.first_name = input.first_name
+        if input.last_name:
+            user.last_name = input.last_name
+        if input.email:
+            user.email = input.email
+        if input.username:
+            user.username = input.username
+        if input.password:
+            user.password = input.password
         user.save()
         return UserEditMutation(user_edit=user)
 
@@ -326,3 +380,4 @@ class Mutation(graphene.ObjectType):
     update_shipping_billing = UpdateShippingBillingMutation.Field()
     user_edit = UserEditMutation.Field()
     add_update_category = UpsertCategoryMutation.Field()
+    sign_up = SignUpMutation.Field()

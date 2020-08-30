@@ -5,8 +5,10 @@ import { Field, Formik } from "formik";
 import get from "lodash/get";
 import MutationAddProductToCart from "../queries/mutationAddProductToCart.graphql";
 import { Link } from "react-router-dom";
+import {ProductFilterRender} from "../AllProducts";
+import {ProductFilterProvider, ShippingBillingProvider} from "../context";
 
-export function CartPage() {
+export function CartPage({}) {
   const { loading, error, data } = useQuery(QueryCart);
   const [mutationQuantity, setMutationQuantity] = useState(0);
   const [mutate] = useMutation(MutationAddProductToCart);

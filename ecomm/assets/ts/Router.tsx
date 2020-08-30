@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import { Navbar } from "./navbar";
 import { ProductDisplay } from "./product";
@@ -12,7 +12,7 @@ import { HomePage } from "./HomePage";
 import { CartPage } from "./cartComponents/CartPage";
 import { BillingShippingPage } from "./BillingShippingPage";
 import { Payment } from "./Payment";
-import { ShippingBillingProvider } from "./context";
+import {ProductFilterProvider, ShippingBillingProvider} from "./context";
 import { ThankYou } from "./ThankYou";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { UserProfileEdit } from "./userComponents/UserProfileEdit";
@@ -22,6 +22,7 @@ import { ProductAdd } from "./adminComponents/ProductAdd";
 import { ProductEditAllProducts } from "./adminComponents/ProductEditAllProducts";
 import { ProductEdit } from "./adminComponents/ProductEdit";
 import { SignUp } from "./userComponents/SignUp";
+import {CategoryFilter} from "./CategoryFilter";
 
 const cookies = new Cookie();
 
@@ -37,13 +38,17 @@ const client = new ApolloClient({
 });
 
 export function Router() {
+
+
   return (
     <div>
       <ShippingBillingProvider>
+        <ProductFilterProvider>
         <ApolloProvider client={client}>
           <BrowserRouter>
             <Navbar />
             <Route path="/products(/)?:categorySlug?">
+              <CategoryFilter />
               <AllProducts />
             </Route>
             <Route path="/login">
@@ -65,7 +70,7 @@ export function Router() {
               <HomePage />
             </Route>
             <Route path={"/cartpage"}>
-              <CartPage />
+              <CartPage  />
             </Route>
             <Route path={"/checkout"}>
               <BillingShippingPage />
@@ -98,7 +103,7 @@ export function Router() {
               )}
             />
           </BrowserRouter>
-        </ApolloProvider>
+        </ApolloProvider></ProductFilterProvider>
       </ShippingBillingProvider>
     </div>
   );

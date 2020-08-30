@@ -46,3 +46,18 @@ export const ShippingBillingProvider = ({ children }) => {
     </ShippingBillingContext.Provider>
   );
 };
+
+
+export const ProductFilterContext = React.createContext(undefined)
+
+export const ProductFilterProvider = ({children}) => {
+  const [productFilter, setProductFilter] = useState("");
+
+  return <ProductFilterContext.Provider
+  value={{productFilter, setProductFilter}}
+  >
+
+    {children}
+  </ProductFilterContext.Provider>
+
+}

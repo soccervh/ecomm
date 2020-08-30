@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
@@ -12,15 +12,20 @@ import QueryAllCategories from "./queries/queryCategories.graphql";
 import { useParams } from "react-router-dom";
 import QueryProduct from "./queries/queryProduct.graphql";
 import { useLazyQuery } from "@apollo/client";
+import {ProductFilterContext} from "./context";
 
-export function AllProducts() {
+export function ProductFilterRender  (){
+  const {productFilter} = useContext(ProductFilterContext)
+
+  return <div>We are finding products based on : {productFilter}</div>
+}
+
+
+export function AllProducts({}) {
   // @ts-ignore
   let { categorySlug } = useParams();
-  const {
-    loading: lQueryAllCategories,
-    error: eQueryAllCategories,
-    data: dQueryAllCategories,
-  } = useQuery(QueryAllCategories);
+  const {productFilter} = useContext(ProductFilterContext)
+
   const [
     queryAllProduct,
     { loading, error, data: dataQueryAllProducts },
@@ -30,12 +35,8 @@ export function AllProducts() {
     queryAllProduct({ variables: { categorySlug: categorySlug } });
   }, [categorySlug]);
 
-  const history = useHistory();
   const { cartData, cartError, cartLoading } = useCart();
-  const [productFilter, setProductFilter] = useState("");
-
   // @ts-ignore
-
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
@@ -49,39 +50,7 @@ export function AllProducts() {
 
   return (
     <div>
-      <div className={`flex`}>
-        <input
-          className={
-            "bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-lg appearance-none leading-normal m-4"
-          }
-          placeholder={"search"}
-          onChange={(e) => {
-            setProductFilter(e.target.value);
-          }}
-        />
-        <div className={`flex`}>
-          <div className={`flex`}>
-            <Link
-              to={`/products/`}
-              className={`p-1 h-8 mr-3 mt-5 px-3 bg-white rounded hover:bg-gray-200 active:bg-blue-200 align-center text-center appearance-none leading-normal`}
-            >
-              All
-            </Link>
-          </div>
-          {dQueryAllCategories?.allCategories.map(({ id, name, slug }) => {
-            return (
-              <div key={id} className={`flex`}>
-                <Link
-                  to={`/products/${slug}`}
-                  className={`p-1 h-8 mr-3 mt-5 px-3 bg-white rounded hover:bg-gray-200 active:bg-blue-200 align-center text-center appearance-none leading-normal`}
-                >
-                  {name}
-                </Link>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      <ProductFilterRender />
       <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 px-4">
         {searcher
           .search(productFilter)

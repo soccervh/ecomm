@@ -6,7 +6,7 @@ import { AddMultipleToCart } from "./cartComponents/AddMultipleToCart";
 import QueryUser from "./queries/queryUser.graphql";
 import QueryProduct from "./queries/queryProduct.graphql";
 
-export function ProductDisplay() {
+export function ProductDetail() {
   const { loading: lUserQuery, error: eUserQuery, data: dUserQuery } = useQuery(
     QueryUser
   );
@@ -17,7 +17,8 @@ export function ProductDisplay() {
     variables: { slug: slug },
   });
   return (
-    <div className="flex content-center items-center justify-center">
+    <div className="flex content-center items-center justify-center flex-wrap">
+        <div className="text-3xl font-semibold w-full text-center mt-8 mb-4">{data?.getProduct?.name}</div>
       <div className="w-64">
         <img
           alt={`${data?.getProduct?.name}`}
@@ -25,10 +26,7 @@ export function ProductDisplay() {
         />
       </div>
       <div className=" ml-8 flex flex-col  ">
-        Picture of {slug} <div className="  ">{data?.getProduct?.name}</div>
-        <div className="  ">
           <AddMultipleToCart productId={data?.getProduct?.id} />
-        </div>
       </div>
     </div>
   );

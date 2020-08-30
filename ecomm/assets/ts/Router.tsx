@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import { Navbar } from "./navbar";
-import { ProductDisplay } from "./product";
+import { ProductDetail } from "./ProductDetail";
 import { SigninForm } from "./userComponents/Signinform";
 import { UserProfile } from "./userComponents/UserProfile";
 import { createUploadLink } from "apollo-upload-client";
@@ -58,7 +58,7 @@ export function Router() {
               <SignUp />
             </Route>
             <Route path={"/product/:slug"}>
-              <ProductDisplay />
+              <ProductDetail />
             </Route>
             <Route path={"/userprofile"}>
               <UserProfile />

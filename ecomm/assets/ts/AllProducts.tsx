@@ -1,17 +1,11 @@
-import React, {useContext, useEffect, useState} from "react";
-import { useMutation, useQuery } from "@apollo/react-hooks";
-import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
+import React, {useContext, useEffect} from "react";
+import {useQuery} from "@apollo/react-hooks";
+import {Link, useParams} from "react-router-dom";
 import FuzzySearch from "fuzzy-search";
 import classNames from "classnames";
 import QueryAllProduct from "./queries/queryAllProducts.graphql";
-import { AddOneToCart } from "./cartComponents/AddOneToCart";
-import { useCart } from "./hooks/useCart";
-import QueryUser from "./queries/queryUser.graphql";
-import QueryAllCategories from "./queries/queryCategories.graphql";
-import { useParams } from "react-router-dom";
-import QueryProduct from "./queries/queryProduct.graphql";
-import { useLazyQuery } from "@apollo/client";
+import {AddOneToCart} from "./cartComponents/AddOneToCart";
+import {useCart} from "./hooks/useCart";
 import {ProductFilterContext} from "./context";
 
 export function ProductFilterRender  (){
@@ -26,18 +20,21 @@ export function AllProducts({}) {
   let { categorySlug } = useParams();
   const {productFilter} = useContext(ProductFilterContext)
 
-  const [
-    queryAllProduct,
-    { loading, error, data: dataQueryAllProducts },
-  ] = useLazyQuery(QueryAllProduct);
+  const
+    { loading, error, data: dataQueryAllProducts }
+   = useQuery(QueryAllProduct, { variables: { categorySlug: categorySlug } });
+
+  // useEffect(() => {
+  //   queryAllProduct({ variables: { categorySlug: categorySlug } });
+  // }, [categorySlug]);
+
 
   useEffect(() => {
-    queryAllProduct({ variables: { categorySlug: categorySlug } });
-  }, [categorySlug]);
-
+  console.log(dataQueryAllProducts)
+  },[dataQueryAllProducts]);
   const { cartData, cartError, cartLoading } = useCart();
   // @ts-ignore
-  if (loading) return <p>Loading...</p>;
+  if ( !dataQueryAllProducts) return <p>Loadingsdfdsfdsf  sds...</p>;
   if (error) return <p>Error :(</p>;
 
   const searcher = new FuzzySearch(

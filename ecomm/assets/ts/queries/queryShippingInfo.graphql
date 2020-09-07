@@ -9,5 +9,6 @@ query QueryShippingInfo($id: Int) {
         state
         zip
         id
+        lastUsed
     }
 }

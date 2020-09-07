@@ -4,7 +4,7 @@ import MutationAddProductToCart from "../queries/mutationAddProductToCart.graphq
 import QueryCart from "../queries/queryCart.graphql";
 import QueryUser from "../queries/queryUser.graphql";
 
-export function AddOneToCart({ productId, productQtyInStock }) {
+export function MinusOneToCart({ productId, productQtyInStock }) {
   const [mutate] = useMutation(MutationAddProductToCart);
   const { loading: lCart, error: eCart, data: dCart } = useQuery(QueryCart);
 
@@ -13,7 +13,7 @@ export function AddOneToCart({ productId, productQtyInStock }) {
   const quantityToSetCartTo =
     (dCart?.cart?.cartProducts.find((cartProduct) => {
       return cartProduct.product.id == productId;
-    })?.quantity || 0) + 1;
+    })?.quantity || 0) - 1;
   return (
     <button
       onClick={(e) => {
@@ -37,7 +37,7 @@ export function AddOneToCart({ productId, productQtyInStock }) {
       }}
     >
       <span className="px-2 py-1 text-teal-800 text-xs leading-4 font-medium bg-teal-100 border border-gray-400 hover:bg-teal-300 rounded-full">
-        +
+        -
       </span>
     </button>
   );

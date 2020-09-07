@@ -5,6 +5,7 @@ import QueryShippingInfo from "./queries/queryShippingInfo.graphql";
 import { ShippingBillingContext } from "./context";
 import { Link, useHistory } from "react-router-dom";
 import QueryCart from "./queries/queryCart.graphql";
+import QueryUser from "./queries/queryUser.graphql";
 import MutationPurchase from "./queries/mutationpurchase.graphql";
 import QueryAllProduct from "./queries/queryAllProducts.graphql";
 import MutationProduct from "./queries/mutationProduct.graphql";
@@ -103,6 +104,8 @@ export function Payment() {
               {
                 query: QueryAllProduct,
               },
+              { query: QueryCart },
+              { query: QueryUser },
             ],
           });
 

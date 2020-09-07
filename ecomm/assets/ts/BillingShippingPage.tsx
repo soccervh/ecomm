@@ -137,20 +137,20 @@ export function BillingShippingPage() {
       validationSchema={schema}
       initialValues={{
         shipping: {
-          name: ``,
-          phone: ``,
-          address: ``,
-          city: ``,
-          state: ``,
-          zip: ``,
+          name: dQueryUser?.currentUser?.shippingSet[0].name || ``,
+          phone: dQueryUser?.currentUser?.shippingSet[0].phone || ``,
+          address: dQueryUser?.currentUser?.shippingSet[0].address || ``,
+          city: dQueryUser?.currentUser?.shippingSet[0].city || ``,
+          state: dQueryUser?.currentUser?.shippingSet[0].state || ``,
+          zip: dQueryUser?.currentUser?.shippingSet[0].zip || ``,
         },
         billing: {
-          name: ``,
-          phone: ``,
-          address: ``,
-          city: ``,
-          state: ``,
-          zip: ``,
+          name: dQueryUser?.currentUser?.shippingSet[0].name || ``,
+          phone: dQueryUser?.currentUser?.shippingSet[0].phone || ``,
+          address: dQueryUser?.currentUser?.shippingSet[0].address || ``,
+          city: dQueryUser?.currentUser?.shippingSet[0].city || ``,
+          state: dQueryUser?.currentUser?.shippingSet[0].state || ``,
+          zip: dQueryUser?.currentUser?.shippingSet[0].zip || ``,
         },
       }}
       onSubmit={async (values) => {
@@ -188,6 +188,7 @@ export function BillingShippingPage() {
                     className={`border rounded m-2 bg-white p-2 text-center `}
                   >
                     <button
+                      type={`button`}
                       onClick={(e) => {
                         setFieldValue("billing", d);
                       }}

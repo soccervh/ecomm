@@ -3,7 +3,9 @@ query QueryCart{
         id
         user {
             id
-        }cartProducts {
+        }
+        cartProducts {
+
             id
             quantity
             product {id

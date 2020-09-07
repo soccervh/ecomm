@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "docker build -t ecommerce . --no-cache",
     "build-production": "NODE_ENV=production webpack --config build/webpack.prod.config.js --progress --colors",
-    "start": "webpack-dev-server --config build/webpack.local.config.js --mode development"
+    "start": "webpack-dev-server --config build/webpack.local.config.js --mode development",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "author": "",
   "license": "ISC",
@@ -65,6 +67,12 @@
   },
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.3.3",
-    "react-refresh": "^0.8.3"
+    "@storybook/addon-actions": "^6.0.20",
+    "@storybook/addon-essentials": "^6.0.20",
+    "@storybook/addon-links": "^6.0.20",
+    "@storybook/react": "^6.0.20",
+    "react-is": "^16.13.1",
+    "react-refresh": "^0.8.3",
+    "storybook-react-router": "^1.0.8"
   }
 }

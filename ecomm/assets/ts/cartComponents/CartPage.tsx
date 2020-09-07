@@ -4,19 +4,21 @@ import QueryCart from "../queries/queryCart.graphql";
 import { Field, Formik } from "formik";
 import get from "lodash/get";
 import MutationAddProductToCart from "../queries/mutationAddProductToCart.graphql";
+import { CheckOutButton } from "./CheckOutButton";
+import { UpdateButton } from "./UpdateButton";
+import { DeleteButton } from "./DeleteButton";
 import { Link } from "react-router-dom";
-import {ProductFilterRender} from "../AllProducts";
-import {ProductFilterProvider, ShippingBillingProvider} from "../context";
 
 export function CartPage({}) {
   const { loading, error, data } = useQuery(QueryCart);
   const [mutationQuantity, setMutationQuantity] = useState(0);
   const [mutate] = useMutation(MutationAddProductToCart);
+  const products = data?.cart?.products || [];
   if (loading) return <div>"Loading"</div>;
   return (
     <Formik
       initialValues={{
-        products: data.cart.products?.map((i) => {
+        products: products.map((i) => {
           return {
             quantity: i.quantity,
             productName: i.product.name,
@@ -31,9 +33,9 @@ export function CartPage({}) {
     >
       {({ values }) => (
         <div className={"flex flex-wrap py-4"}>
-          <div className={"w-1/3"}> </div>
+          <div className={"w-1/3"} />
           <div className={"w-1/3"}>
-            {data?.cart?.products?.map(({ quantity, product }, n) => {
+            {products.map(({ quantity, product }, n) => {
               return (
                 <div
                   key={product.id}
@@ -42,7 +44,9 @@ export function CartPage({}) {
                   }
                 >
                   <div className={"w-24 flex-none"}>
-                    <img src={product.productPic} alt={`${product.name}`} />
+                    <Link to={`/product/${product.slug}`}>
+                      <img src={product.productPic} alt={`${product.name}`} />
+                    </Link>
                   </div>
                   <div className={"flex flex-wrap"}>
                     <div className={"w-full text-left mx-2"}>
@@ -57,9 +61,7 @@ export function CartPage({}) {
                       />
                     </div>
                     <div>
-                      <button
-                        className={`p-2 ml-2 border-solid border-1 rounded border-gray-300 bg-green-100 hover:border-blue-300`}
-                        type={"button"}
+                      <UpdateButton
                         onClick={(e) => {
                           // Call your mutation
                           // you have the product.id
@@ -77,11 +79,8 @@ export function CartPage({}) {
                             }
                           });
                         }}
-                      >
-                        Update
-                      </button>
-                      <button
-                        className={`p-2 ml-2 border-solid border-1 rounded border-gray-300 bg-red-100 hover:border-red-300`}
+                      />
+                      <DeleteButton
                         onClick={(e) => {
                           mutate({
                             variables: {
@@ -91,9 +90,7 @@ export function CartPage({}) {
                           });
                           return;
                         }}
-                      >
-                        Delete
-                      </button>
+                      />
                     </div>
                     <div className={"w-full text-left ml-2"}>
                       ${quantity * product.price}
@@ -104,12 +101,7 @@ export function CartPage({}) {
             })}
           </div>
           <div className={"w-1/3 text-center pt-4"}>
-            <Link
-              className={`py-2 px-4 border rounded bg-yellow-200`}
-              to={"/checkout"}
-            >
-              Proceed to Check out!
-            </Link>
+            <CheckOutButton />
           </div>
         </div>
       )}
